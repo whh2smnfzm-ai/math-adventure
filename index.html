@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c2347f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Math Adventure">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Leah &amp; Lena’s NZ Math Adventure</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff3e6;--card:#ffffff;--ink:#3a1d40;--acc:#c2347f;--acc2:#e8a317;--soft:#fbd9e8;--onacc:#fff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;font-size:18px;min-height:100vh}
+body.kpop{--bg:#120a2a;--card:#231445;--ink:#f3eaff;--acc:#16e0cc;--acc2:#ff3fa8;--soft:#35206a;--onacc:#10062a}
+header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:var(--card);border-bottom:3px solid var(--acc)}
+header b{font-size:17px}
+main{max-width:640px;margin:0 auto;padding:14px 14px 220px}
+h1{font-size:26px;margin:.4em 0;text-align:center}
+.c{text-align:center}
+button{font:inherit;color:inherit;cursor:pointer;border:0}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.ic{background:var(--soft);border-radius:12px;padding:6px 10px;font-size:18px;margin-left:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.big,.tile{background:var(--card);border:3px solid var(--acc);border-radius:22px;padding:18px 8px;font-size:22px;font-weight:700;box-shadow:0 5px 0 var(--acc)}
+.big small{display:block;font-size:14px;font-weight:400;margin-top:4px}
+.tile .em{display:block;font-size:46px}
+.tile small{display:block;font-size:14px;font-weight:400}
+.big:active,.tile:active,.btn:active{transform:translateY(4px);box-shadow:none}
+.pill{background:var(--soft);border-radius:99px;padding:9px 16px;margin:4px}
+.btn{background:var(--acc);color:var(--onacc);border-radius:18px;padding:12px 22px;font-weight:700;font-size:20px;box-shadow:0 4px 0 var(--acc2);margin:4px}
+.row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;margin-top:12px}
+.card{background:var(--card);border-radius:22px;padding:18px;margin:10px 0;text-align:center;font-size:26px;font-weight:700;line-height:1.5}
+.card .ic{font-size:22px}
+.lena .card{font-size:34px}
+.bar{height:12px;background:var(--soft);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .4s}
+input#ans{display:block;margin:8px auto;width:150px;font:inherit;font-size:34px;text-align:center;border-radius:16px;border:3px solid var(--acc);background:var(--card);color:var(--ink);padding:6px}
+.hint{background:var(--soft);border-radius:18px;padding:12px;font-size:20px;text-align:center;margin-top:10px}
+.d{display:inline-block;animation:pop .35s both}
+.co{display:inline-block;background:var(--acc2);color:#2a1500;border-radius:50%;min-width:34px;padding:4px;margin:2px;font-weight:700;font-size:15px;animation:pop .35s both}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.shake{animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.fb{min-height:34px;text-align:center;font-weight:700;font-size:20px;margin-top:6px}
+.v{border-bottom:2px dotted var(--acc);cursor:help}
+#tip{min-height:28px;text-align:center;font-size:16px;color:var(--acc2)}
+#pad{position:fixed;right:8px;bottom:calc(8px + env(safe-area-inset-bottom,0px));background:#fff;border:3px solid var(--acc);border-radius:14px;padding:6px;z-index:20;color:#222}
+#pad canvas{display:block;touch-action:none;background:#fffef6;border-radius:8px}
+#pad button{background:#eee;border-radius:8px;padding:4px 10px;margin:4px 2px 0;color:#222}
+.cf{position:fixed;top:-30px;font-size:26px;z-index:30;pointer-events:none;animation:fall 1.7s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+table{width:100%;border-collapse:collapse;font-size:15px}
+.pg{width:auto;margin:8px auto}.pg th{font-size:17px;padding-right:12px;text-align:left}.pg td{font-size:28px;letter-spacing:2px}.lena .pg td{font-size:38px}.card small{display:block;font-size:14px;font-weight:400}
+.nv{font-size:34px;line-height:1.5}.fl{animation:fl .3s 3s forwards}@keyframes fl{to{opacity:0}}
+@media print{header,.noprint{display:none!important}body{background:#fff;color:#000}}
+body.sz1 main{zoom:1.15}body.sz2 main{zoom:1.3}
+body.dys{font-family:Verdana,"Trebuchet MS",Tahoma,sans-serif;letter-spacing:.04em;word-spacing:.12em}
+body.sp{line-height:1.8}
+.card,.hint,.note{overflow-wrap:anywhere}svg{max-width:100%}
+.ty{text-decoration:line-through;letter-spacing:3px;margin-right:10px}
+td,th{padding:5px;border-bottom:1px solid var(--soft);text-align:left}
+.stamp{display:inline-block;border:4px double var(--acc2);color:var(--acc2);border-radius:14px;padding:8px 16px;transform:rotate(-4deg);font-weight:700;animation:pop .5s .3s both}
+.note{background:var(--soft);border-radius:14px;padding:10px;font-size:16px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+body{background:linear-gradient(160deg,#fff0f7 0%,#fff6e6 55%,#eaf5ff 100%) fixed;font-family:"Baloo 2","Nunito","Trebuchet MS",system-ui,sans-serif}
+body.kpop{background:radial-gradient(circle at 15% 0%,#42209a 0%,#150b34 55%,#0a0520 100%) fixed}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23f5b942' opacity='.6'%3E%3Cpath d='M20 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z'/%3E%3Cpath d='M90 70l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z'/%3E%3C/g%3E%3C/svg%3E")}
+body.kpop::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%2316e0cc' opacity='.6'%3E%3Cpath d='M20 20l2 5 5 2-5 2-2 5-2-5-5-2 5-2z'/%3E%3C/g%3E%3Cg fill='%23ff3fa8' opacity='.6'%3E%3Cpath d='M90 70l1.5 4 4 1.5-4 1.5-1.5 4-1.5-4-4-1.5 4-1.5z'/%3E%3C/g%3E%3C/svg%3E")}
+header{background:linear-gradient(90deg,var(--acc) 0%,var(--acc) 60%,var(--acc2) 100%);color:var(--onacc);border:0;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+header b{color:var(--onacc);font-size:18px;letter-spacing:.3px}.ic{background:rgba(255,255,255,.3);color:inherit;border-radius:14px}
+.card{background:var(--card);border:2px solid var(--soft);border-radius:28px;box-shadow:0 10px 24px rgba(90,30,100,.13)}
+body.kpop .card{border-color:var(--acc2);box-shadow:0 0 18px rgba(255,63,168,.25),0 10px 24px rgba(0,0,0,.35)}
+.tile,.big{background:linear-gradient(180deg,var(--card) 0%,var(--soft) 100%);border-radius:28px;border:3px solid var(--acc);box-shadow:0 6px 0 var(--acc),0 14px 24px rgba(0,0,0,.12);transition:transform .15s}
+.tile:active,.big:active{transform:translateY(5px);box-shadow:0 1px 0 var(--acc)}
+.tile .em svg,.tile .em img{width:68px;height:68px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.2))}
+.btn{background:linear-gradient(180deg,var(--acc) 0%,var(--acc) 55%,var(--acc2) 260%);border-radius:22px;box-shadow:0 5px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(0,0,0,.15)}
+.pill{background:var(--card);border:2px solid var(--acc);box-shadow:0 3px 0 var(--soft);color:var(--ink)}
+.bar{height:16px;border-radius:12px}.bar i{background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.hint{border:2px dashed var(--acc);background:var(--soft)}h1{text-shadow:0 2px 0 var(--soft)}.note{border:2px solid var(--acc2)}
+svg.hero{width:100%;height:auto;border-radius:22px;box-shadow:0 10px 22px rgba(0,0,0,.18)}
+.ca{fill:var(--acc)}.cd{fill:var(--acc2)}.sa{stroke:var(--acc)}.sd{stroke:var(--acc2)}
+</style></head>
+<body class="royal">
+<header><b>NZ Math Adventure <small>v11</small></b><span><button class="ic" onclick="help()" aria-label="Help">❓</button><button class="ic" id="mu" onclick="S.mute=!S.mute;save();upd()" aria-label="Sound on or off">🔊</button><button class="ic" onclick="tog()" aria-label="Switch theme">🎨</button><button class="ic" onclick="who=null;pick()" aria-label="Switch profile">👤</button><button class="ic" onclick="parent()" aria-label="Parent dashboard">👪</button></span></header>
+<main id="app"></main>
+<div id="pad" hidden><canvas id="cv" width="240" height="170"></canvas><button onclick="clr()">🧹 Clear</button><button onclick="pad()">✖ Close</button></div>
+<script>
+const $=s=>document.querySelector(s),r=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pk=a=>a[r(0,a.length-1)];
+let S;try{S=JSON.parse(localStorage.getItem("nzma"))}catch(e){}
+S=S||{lvl:{leah:0,lena:0},vault:{leah:[],lena:[]},log:[],items:{leah:[],lena:[]},stamp:"⭐ Amazing work today!",theme:"royal"};
+const save=()=>{try{localStorage.setItem("nzma",JSON.stringify(S))}catch(e){}};
+const P={leah:{n:"Leah",yr:3},lena:{n:"Lena",yr:1}};
+let who=null,ss=null;
+const K=()=>S.theme==="kpop",lena=()=>who==="lena",today=()=>new Date().toLocaleDateString("en-NZ");
+const done=()=>S.log.filter(l=>l.who===who&&l.d===today()&&!l.pr).length;
+const tier=()=>Math.max(1,Math.min(5,prog(who)+Math.max(-1,Math.min(1,S.lvl[who]))));
+const R=h=>{$("#app").innerHTML=h;document.body.classList.toggle("lena",lena());rdApply();bgApply()};
+const AREAS={num:["Number & Algebra","🔢"],mea:["Measurement","📏"],geo:["Geometry","🔷"],sta:["Statistics","📊"]};
+const PL={royal:{num:"Gem Mine",mea:"Market Square",geo:"Crystal Castle",sta:"Rainbow Garden"},kpop:{num:"Beat Lab",mea:"Neon Market",geo:"Shape Stage",sta:"Chart Arena"}};
+const ITEMS={royal:["👗 Rose Gown","👑 Sparkle Crown","🦄 Pet Unicorn","🏰 Mini Castle","💍 Gem Ring","🧚 Fairy Wings"],kpop:["🎤 Gold Mic","🧥 Stage Jacket","👟 Neon Sneakers","🐯 Pet Tiger","🕶️ Star Shades","🎧 Beat Headphones"]};
+const V={"Place Value":"The value of a digit depends on where it sits: tens or ones.","Digit":"A single number symbol, 0 to 9.","Measurement":"Finding out how long, heavy or valuable something is.","Change":"Money you get back when you pay with more than the price.","Symmetry":"When both sides match, like a mirror. A fold line shows it.","Sides":"The straight edges of a shape.","Tally":"Marks used to count, in groups of five.","Pictograph":"A graph that uses pictures to show numbers."};
+const C={num:["Numbers are made of tens and ones. Add and take away in your head!","Use {{Place Value}}: every {{Digit}} has a job. Make tens to add and subtract in your head."],
+mea:["Coins and notes are money! Count the dollars.","{{Measurement}} with NZ money: $1 and $2 coins, $5 and $10 notes. Work out the {{Change}}."],
+geo:["Shapes have sides and corners. Count them!","Look at {{Sides}} and corners, and find {{Symmetry}}: where could you fold it so both halves match?"],
+sta:["Pictures can show numbers. Count each picture!","Read a {{Pictograph}} or {{Tally}} carefully, then add or compare the groups."]};
+const dots=(n,e)=>Array.from({length:n},(_,i)=>`<span class="d" style="animation-delay:${i*.1}s">${e}</span>`).join("");
+const co=(v,n)=>Array.from({length:n},(_,i)=>`<span class="co" style="animation-delay:${i*.1}s">$${v}</span>`).join("");
+const GE={1:[["How many sides does a triangle have?",3,"🔺","Trace each edge with your finger."],["How many sides does a square have?",4,"🟦","All four sides are the same length."],["How many corners does a triangle have?",3,"🔺","Corners are where two sides meet."],["How many sides does a rectangle have?",4,"▭","Two long and two short."],["How many corners does a square have?",4,"🟦","Count each corner."]],
+2:[["How many corners does a rectangle have?",4,"▭","Count each point."],["How many sides does a pentagon have?",5,"⬟","Penta means five."],["How many sides does a hexagon have?",6,"⬡","Hexa means six."],["How many corners does a hexagon have?",6,"⬡","Same as the number of sides."],["How many lines of symmetry does a heart have?",1,"❤️","Fold it down the middle."]],
+3:[["How many lines of symmetry does a square have?",4,"🟦","Fold across, down and both corners."],["How many lines of symmetry does a rectangle (not a square) have?",2,"▭","Across and down."],["How many faces does a cube have?",6,"🎲","Top, bottom and four sides."],["How many lines of symmetry does an equilateral triangle have?",3,"🔺","One from each corner."]],
+4:[["How many edges does a cube have?",12,"🎲","4 on top, 4 on the bottom, 4 going up."],["How many corners does a cube have?",8,"🎲","4 on top and 4 on the bottom."],["How many lines of symmetry does a regular pentagon have?",5,"⬟","One from each corner."],["How many faces does a triangular prism have?",5,"🔺","2 triangles and 3 rectangles."]]};
+function pic(c,E){return `<table class="pg">${E.map((e,i)=>`<tr><th>${e[1][0].toUpperCase()+e[1].slice(1)}</th><td>${e[0].repeat(c[i])}</td></tr>`).join("")}</table><small>Each picture counts as 1.</small>`}
+function bar(c,E){const mx=Math.max(...c)+1;let g="";for(let v=0;v<=mx;v++){const y=100-v*80/mx;g+=`<line x1="30" x2="230" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#ccc"/><text x="24" y="${(y+4).toFixed(1)}" font-size="10" text-anchor="end" fill="#222">${v}</text>`}
+ c.forEach((n,i)=>{const h=n*80/mx;g+=`<rect x="${45+i*65}" y="${(100-h).toFixed(1)}" width="45" height="${h.toFixed(1)}" fill="#c2347f"/><text x="${67+i*65}" y="116" font-size="12" text-anchor="middle" fill="#222">${E[i][0]}</text>`});
+ return `<svg viewBox="0 0 240 122" role="img" aria-label="Bar graph" style="width:100%;max-width:320px;background:#fff;border-radius:10px">${g}</svg>`}
+function pat(t){const k=r(0,2);
+ if(k===0){let s=pk(t<3?[2,5,10]:[3,4,6,7]),b=r(0,3)*s,i=r(2,4),L=[0,1,2,3,4].map(j=>b+j*s);return{q:`${L.map((x,j)=>j===i?"?":x).join(", ")}<br>What number is missing?`,a:L[i],h:`The pattern goes up by ${s} each time. ${L[i-1]} + ${s} = ?`}}
+ if(k===1){let b=r(2,9),c=r(b+1,t<3?15:40);return{q:`? + ${b} = ${c}`,a:c-b,h:`What plus ${b} makes ${c}? Count up from ${b} to ${c}.<br>${dots(b,"🟣")}`}}
+ let h=r(2,t<3?10:20);return{q:`Double ${h} = ?`,a:2*h,h:dots(h,"🟣")+" + "+dots(h,"🟡")+"<br>Doubles means the same number twice."}}
+function gen(a,t){
+ if(a==="fnd")return r(0,4)===0?fv(t):fnd(t);
+ if(a==="geo"&&t<=2&&r(0,2)===0)return shp2(t);
+ if(a==="sta"&&t<=3&&r(0,2)===0)return tallyQ(t);
+ if(a==="sta"&&t===2&&r(0,2)===0)return moreQ();
+ {const v=vx(a,t);if(v)return v}
+ if(t>=5)return y5(a);
+ if(a==="num"&&r(0,4)===0)return wp(t);
+ if(a==="num"&&r(0,3)===0)return nx(t);
+ if(a==="num"&&t>=2&&r(0,4)===0)return fr(t);
+ if(a==="num"&&t>=2&&r(0,3)===0)return cmp(t);
+ if(a==="num"&&t>=2&&r(0,2)===0)return pat(t);
+ if(a==="mea"&&r(0,3)===0)return tm(t);
+ if(a==="mea"&&t>=2&&r(0,4)===0)return lg(t);
+ if(a==="mea"&&t>=2&&r(0,3)===0){let x=r(8,20),y=r(2,x-2);return{q:`A pencil is ${x} cm long. A crayon is ${y} cm long. How many cm longer is the pencil?`,a:x-y,h:`✏️ ${x} cm − 🖍️ ${y} cm. Count up from ${y} to ${x}.`}}
+ if(a==="num"){
+  if(t===1){let x=r(1,6),y=r(1,10-x);return{q:`${x} + ${y} = ?`,a:x+y,h:dots(x,"🍎")+" + "+dots(y,"🍏")+"<br>Count them all!"}}
+  if(t===2){if(r(0,1)){let x=r(6,12),y=r(3,20-x);return{q:`${x} + ${y} = ?`,a:x+y,h:dots(x,"🟣")+" + "+dots(y,"🟡")+"<br>Make 10 first, then add the rest."}}let x=r(10,20),y=r(1,9);return{q:`${x} − ${y} = ?`,a:x-y,h:dots(x,"🟣")+`<br>Take away ${y}. Count back!`}}
+  if(t===3){if(r(0,1)){let n=r(21,99);return{q:`How many tens are in ${n}?`,a:Math.floor(n/10),h:`${n} = ${Math.floor(n/10)} tens and ${n%10} ones.<table style="width:auto;margin:6px auto;text-align:center"><tr><th>Tens</th><th>Ones</th></tr><tr><td>${Math.floor(n/10)}</td><td>${n%10}</td></tr></table>${dots(Math.floor(n/10),"🔟")}`}}let x=r(11,60),y=r(11,39);return{q:`${x} + ${y} = ?`,a:x+y,h:`Add the tens, then the ones: ${Math.floor(x/10)*10} + ${Math.floor(y/10)*10} = ${Math.floor(x/10)*10+Math.floor(y/10)*10}, then ${x%10} + ${y%10}.`}}
+  let x=pk([2,5,10]),y=r(2,9);return{q:`${x} × ${y} = ?`,a:x*y,h:`${y} groups of ${x}:<br>`+Array(y).fill(dots(x,"⭐")).join(" | ")}
+ }
+ if(a==="mea"){
+  if(t===1){let x=r(1,3),y=r(1,4);return{q:`You have ${x} × $2 coins and ${y} × $1 coins. How many dollars?`,a:2*x+y,h:co(2,x)+" "+co(1,y)+"<br>Count by 2s, then add the 1s."}}
+  if(t===2){let x=r(1,2),y=r(1,3),z=r(0,2);return{q:`You have ${x} × $5 notes, ${y} × $2 coins and ${z} × $1 coins. How many dollars?`,a:5*x+2*y+z,h:co(5,x)+" "+co(2,y)+" "+co(1,z)+"<br>Start with the biggest!"}}
+  if(t===3){let p=r(1,9);return{q:`A toy costs $${p}. You pay with a $10 note. How much change?`,a:10-p,h:`Count up from ${p} to 10.<br>${dots(10-p,"🪙")}`}}
+  if(r(0,1)){let p=r(6,18);return{q:`A book costs $${p}. You pay with a $20 note. How much change?`,a:20-p,h:`Count up from ${p} to 20: first to the next 10, then the rest.`}}
+  let x=r(1,3),y=r(1,3);return{q:`You have ${x} × $10 notes and ${y} × $5 notes. How many dollars?`,a:10*x+5*y,h:co(10,x)+" "+co(5,y)+"<br>Count by 10s, then by 5s."}
+ }
+ if(a==="geo"){const g=pk(GE[t]);return{q:g[0],a:g[1],h:`<span style="font-size:40px">${g[2]}</span><br>${g[3]}`}}
+ const E=[["🍎","apples"],["🍌","bananas"],["🍇","grapes"]],m=t<2?5:t<4?7:9,c=E.map(()=>r(1,m));
+ if(t===1){let i=r(0,2);return{q:`${pic(c,E)}<br>How many ${E[i][1]}?`,a:c[i],h:"Point and count each one.<br>"+dots(c[i],E[i][0])}}
+ if(t===2){let i=r(0,2),j=(i+1)%3;return{q:`${pic(c,E)}<br>${E[i][1]} + ${E[j][1]} = ?`,a:c[i]+c[j],h:`${dots(c[i],E[i][0])} + ${dots(c[j],E[j][0])}<br>Count both groups.`}}
+ if(t===3){let i=r(0,2),j=(i+1)%3;c[i]=c[j]+r(1,3);return{q:`${pic(c,E)}<br>How many more ${E[i][1]} than ${E[j][1]}?`,a:c[i]-c[j],h:`Match each ${E[j][0]} with an ${E[i][0]}. The ones left over are the difference.`}}
+ return{q:`${r(0,1)?bar(c,E):pic(c,E)}<br>How many fruit altogether?`,a:c[0]+c[1]+c[2],h:"Add the three groups: "+c.join(" + ")+"."}
+}
+// ---- voice, sound, effects
+function sayOld(t){if(S.mute)return;try{speechSynthesis.cancel();const ko=speechSynthesis.getVoices().some(v=>/^ko/i.test(v.lang));(t||txt(ss.qs[ss.i].q)).split(/(daebak)/i).filter(x=>x.trim()).forEach(p=>{const k=/^daebak$/i.test(p),u=new SpeechSynthesisUtterance(k?(ko?"대박":"deh bahk"):p);u.lang=k&&ko?"ko-KR":"en-NZ";u.rate=lena()?.85:1;speechSynthesis.speak(u)})}catch(e){}}
+const txt=h=>h.replace(/<svg[\s\S]*?<\/svg>/g,"Look at the picture. ").replace(/<span class="nv[^"]*">[\s\S]*?<\/span>/g,"Look at the picture. ").replace(/<td>[^<]*<\/td>/g,"").replace(/<br>/g,". ").replace(/<[^>]+>/g,"").replace(/−/g," minus ").replace(/×/g," times ").replace(/\+/g," plus ").replace(/= \?/g," equals what").replace(/\$(\d+)/g,"$1 dollars");
+let AC;function snd(f,d=.15){if(S.mute||S.calm)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function confetti(){if(S.calm)return;const e=K()?["🎤","⭐","💜","🔥"]:["💎","👑","✨","🌸"];for(let i=0;i<22;i++){const s=document.createElement("span");s.className="cf";s.textContent=pk(e);s.style.left=r(0,95)+"vw";s.style.animationDelay=Math.random()*.5+"s";document.body.appendChild(s);setTimeout(()=>s.remove(),2400)}}
+const praise=()=>pk(K()?[`Daebak! 🔥`,`Super Star, ${P[who].n}! ⭐`,`You’re on fire, Hunter! 🎤`]:[`Splendid, Your Majesty! 👑`,`Royal brilliance, ${P[who].n}! 💎`,`Magnificent, Princess! ✨`]);
+// ---- scratchpad
+const cv=$("#cv"),cx=cv.getContext("2d");cx.lineWidth=3;cx.lineCap="round";cx.strokeStyle="#333";let dr=0;
+const pt=e=>{const b=cv.getBoundingClientRect();return{x:(e.clientX-b.left)*cv.width/b.width,y:(e.clientY-b.top)*cv.height/b.height}};
+cv.onpointerdown=e=>{dr=1;const p=pt(e);cx.beginPath();cx.moveTo(p.x,p.y)};
+cv.onpointermove=e=>{if(!dr)return;const p=pt(e);cx.lineTo(p.x,p.y);cx.stroke()};
+cv.onpointerup=cv.onpointerleave=()=>dr=0;
+const clr=()=>cx.clearRect(0,0,cv.width,cv.height);
+const pad=()=>{$("#pad").hidden=!$("#pad").hidden};
+// ---- screens
+function tog(){S.theme=K()?"royal":"kpop";save();document.body.className=S.theme+(lena()?" lena":"");if($("#q")||$("#tip"))return;who?home():pick()}
+function setT(t){S.theme=t;save();document.body.className=t;pick()}
+function pick(){document.body.className=S.theme;R(`${art()}<h1>${K()?"Choose your Hunter!":"Choose your Princess!"}</h1><div class="g2"><button class="big" onclick="sel('leah')">${av("leah")}<br>Leah<small>Year 3 · Level 2</small></button><button class="big" onclick="sel('lena')">${av("lena")}<br>Lena<small>Year 1 · Level 1</small></button></div><p class="c">Theme (switch any time):<br><button class="pill" onclick="setT('royal')">👑 Royal Kingdom</button><button class="pill" onclick="setT('kpop')">🎤 K-Pop Demon Hunter</button></p>`)}
+function sel(w){who=w;document.body.className=S.theme+(lena()?" lena":"");home()}
+function home(){const n=P[who].n,lim=done()>=goal(),have=S.items[who];
+ R(`${art()}<h1>${K()?"Stage Map":"Royal Map"}</h1><p class="c">${lena()?"":`Hi ${n}! `}Pick a place to explore.</p>
+ <div class="g2">${Object.keys(AREAS).map(a=>`<button class="tile" onclick="go('${a}')"><span class="em">${icon(a)}</span>${PL[S.theme][a]}${lena()?"":`<small>${AREAS[a][0]}</small>`}<small>${sk(a)}</small></button>`).join("")}</div>
+ <p class="c">${lim?"":`<button class="pill" onclick="race()">⚡ Number Race</button>`}<button class="pill" onclick="book()">🏅 Stickers</button><button class="pill" onclick="pcard()">🪧 My Card</button>${lena()?`<button class="pill" onclick="go('fnd')">🔵 Foundations ${sk('fnd')}</button>`:""}${chkOk()?`<button class="pill" onclick="startCheck()">⭐ Star Challenge</button>`:""}</p>
+ <p class="c">${focusOn()?"📌 School focus":"💡 Try next"}: <button class="pill" onclick="go('${nextA()}')">${AREAS[nextA()][1]} ${PL[S.theme][nextA()]}</button></p>
+ ${lim?`<p class="note">🌙 Today’s ${goal()} adventure${goal()>1?"s are":" is"} done! Review mode is open: 5 practice questions, no limits on learning.</p>`:`<p class="c">Adventures today: ${done()} of ${goal()}</p>`}
+ <p class="c"><button class="pill" onclick="wardrobe()">${who==="leah"?"🧒":"👧"} ${((S.wear||{})[who]||[]).map(x=>x.split(" ")[0]).join("")} My Avatar</button></p>
+ <p class="c">⭐ Stars: ${stars(who)}</p>
+ <p class="c">${have.length?"My collection: "+have.join(" · "):"Win items by finishing adventures!"}</p>
+ <p class="c">🔥 Streak: ${streak()} day${streak()===1?"":"s"}</p>${S.vault[who].length?`<p class="c"><button class="pill" onclick="vaultGo()">🔁 Review Mistake Vault (${S.vault[who].length})</button></p>`:""}`);
+ if(lena())say(greet(n))}
+function go(a){const lim=done()>=goal(),n=lim?5:10,qs=S.vault[who].filter(x=>x.area===a).slice(0,3).map(x=>({...x,v:1}));
+ while(qs.length<n)qs.push({...gen(a,tier()),area:a});
+ ss={a,qs,i:0,sc:0,miss:[],tr:0,pr:lim};const lq=qs.find(x=>x.v&&topicOf(x));ss.after=lim?"ask":"concept";if(lq)lesson(topicOf(lq),ss.after);else lim?ask():concept()}
+function concept(){const t=C[ss.a][lena()?0:1].replace(/\{\{(.+?)\}\}/g,(_,k)=>`<span class="v" onclick="$('#tip').textContent='${k}: ${V[k].replace(/'/g,"’")}'">${k}</span>`);
+ R(`<button class="pill" onclick="quit(this)">⬅ Back</button><div class="card"><div style="font-size:64px">${AREAS[ss.a][1]}</div>${t}<br><button class="ic" onclick="say('${txt(t).replace(/'/g,"’")}')">🔊</button></div><div id="tip"></div><div class="row"><button class="btn" onclick="ask()">${lena()?"▶ Go!":"Let’s start!"}</button></div>`);
+ if(lena())say(txt(t))}
+function ask(){const q=ss.qs[ss.i];ss.tr=0;clr();
+ R(`<button class="pill" onclick="quit(this)">⬅ Back</button><div class="bar"><i style="width:${ss.i/ss.qs.length*100}%"></i></div><p class="c">${ss.i+1} / ${ss.qs.length}${q.v?" · 🔁 Mistake Vault":""}</p>
+ <div class="card" id="q">${q.q}<br><button class="ic" onclick="say()" aria-label="Read aloud">🔊</button></div>
+ ${q.o?`<div class="row">${q.o.map(o=>`<button class="big" style="min-width:110px" onclick="$('#ans').value=${o};check()">${o}</button>`).join("")}</div>`:""}<input id="ans" ${q.o||q.set?'style="display:none" ':''}inputmode="numeric" pattern="[0-9]*" placeholder="?" onkeydown="if(event.key==='Enter')check()" aria-label="Your answer">
+ <div class="fb" id="fb" aria-live="polite"></div><div class="hint" id="hint" hidden></div>
+ <div class="row" id="btns">${ss.chk?"":`<button class="pill" onclick="hint()">💡${lena()?"":" How to solve?"}</button>`}${ss.chk||!topicOf(q)?"":`<button class="pill" onclick="lesson(topicOf(ss.qs[ss.i]),'back')">📖${lena()?"":" Teach me"}</button>`}<button class="pill" onclick="pad()" aria-label="Scratchpad">✏️</button><button class="btn" onclick="check()">✔${lena()?"":" Check Answer"}</button></div>`);
+ if(q.set){ckh=1;$("#ans").value=1}
+ if(lena())say()}
+function hint(){const q=ss.qs[ss.i],h=$("#hint");h.hidden=false;h.innerHTML=q.h+"<br>🌱 Your brain is growing!";say(txt(q.h)+" Your brain is growing!")}
+function check(){const q=ss.qs[ss.i],v=$("#ans").value.trim();if(v===""||$("#ans").disabled)return;const ok=+v===q.a,fb=$("#fb");
+ const nxt=()=>{$("#btns").innerHTML=`<button class="btn" onclick="next()">${ss.i+1<ss.qs.length?"Next ➜":"Finish ➜"}</button>`;$("#ans").disabled=true};
+ if(ok){snd(660);setTimeout(()=>snd(880),120);confetti();if(!ss.tr){ss.sc++;if(ss.chk)ss[q.k]++}S.vault[who]=S.vault[who].filter(x=>x.q!==q.q);save();const pr=praiseL();fb.textContent=pr[0];speakLine(pr[1],pr[0]);nxt();return}
+ snd(220,.25);if(!ss.tr){ss.tr=1;ss.miss.push(q.area);if(!S.vault[who].some(x=>x.q===q.q)){S.vault[who].push({area:q.area,q:q.q,a:q.a,h:q.h,o:q.o,set:q.set});S.vault[who]=S.vault[who].slice(-30);save()}
+  const nd=nudge();fb.textContent=nd+" Try again, or tap 💡"+(topicOf(q)?" or 📖":"");if(lena())say(nd);$("#q").classList.remove("shake");void $("#q").offsetWidth;$("#q").classList.add("shake");$("#ans").select()}
+ else{fb.textContent=`The answer is ${q.a}. We’ll practise it again soon! 🌱`;nxt();if(!ss.chk){hint();if(tier()>1)$("#btns").innerHTML+=`<button class="pill" onclick="easier()">🌱 Try an easier one</button>`}}}
+function next(){ss.i++;if(ss.i<ss.qs.length)ask();else if(ss.chk)chkEnd();else ss.pr?finish(null):rate()}
+function rate(){R(`<button class="pill" onclick="quit(this)">⬅ Back</button><h1>How was today’s session?</h1><p class="c">You got ${ss.sc} of ${ss.qs.length} first time!</p><div class="row"><button class="big" onclick="finish('Easy')">😁<small>Easy</small></button><button class="big" onclick="finish('Just Right')">🙂<small>Just Right</small></button><button class="big" onclick="finish('Hard')">😟<small>Hard</small></button></div>`);if(lena())say("How was today's session?")}
+function finish(rt){let item=null;
+ if(rt==="Easy")S.lvl[who]=Math.min(1,S.lvl[who]+1);
+ if(rt==="Hard"){S.lvl[who]=Math.max(-1,S.lvl[who]-1);ss.miss.forEach(a=>{const g=gen(a,tier());S.vault[who].push({area:a,...g})});S.vault[who]=S.vault[who].slice(-30)}
+ if(!ss.pr){const pool=ITEMS[S.theme].filter(x=>!S.items[who].includes(x));item=pool.length?pool[0]:pk(ITEMS[S.theme]);if(pool.length)S.items[who].push(item)}
+ S.log.push({d:today(),t:Date.now(),who,area:ss.a,sc:ss.sc,n:ss.qs.length,r:rt||"Practice",m:ss.miss.length,pr:ss.pr?1:0});save();
+ const st=story(item),nw=stk();
+ R(`<h1>${ss.pr?"Great practice!":K()?"Concert complete! 🎤":"Quest complete! 👑"}</h1>
+ <div class="card">${"⭐".repeat(Math.max(1,Math.round(ss.sc/ss.qs.length*5)))}<br>${ss.sc} / ${ss.qs.length}${item?`<br>New item: ${item}`:""}</div>
+ <p class="c"><span class="stamp">${S.stamp}</span></p>
+ ${ss.pr?"":`<div class="card" style="font-size:18px;font-weight:400;text-align:left"><button class="btn" onclick="say(this.nextElementSibling.textContent)">🔊 Today’s Adventure Story</button><span>${st}</span></div><p class="note">✅ Parent update sent</p>`}
+ ${nw.length?`<p class="note">🏅 New sticker: ${nw.map(x=>x[1]+" "+x[2]).join(", ")}</p>`:""}
+ <div class="row"><button class="btn" onclick="home()">Back to map</button></div>`);
+ if(!ss.pr){confetti();if(lena())say(st)}}
+function story(item){const n=P[who].n,p=PL[S.theme][ss.a],s=ss.sc,m=ss.miss.length;
+ const tail=m?`A few tricky puzzles hid in the Mistake Vault, but ${n} promised to visit them again, because brains grow when they try hard.`:`Not one puzzle could trick ${n} today.`;
+ return K()?`The lights went up at the ${p}, and ${n} grabbed the mic. The demons of confusion were hiding in every number. With sharp mental maths, ${n} beat ${s} of them on the very first try, and every answer made the crowd roar. ${tail} The music got louder, the stage glowed, and ${n} won a ${item}. Super Star, see you at the next show!`
+ :`Once upon a time, Princess ${n} walked into the ${p}. The magic doors only open for clever thinkers. She solved ${s} puzzles on her first try, and each answer made a gem sparkle. ${tail} The whole kingdom cheered, and she earned a ${item}. The end, until tomorrow’s adventure!`}
+function parent(){R(`<h1>Parents only</h1><p class="c">Enter your PIN</p><input id="ans" type="password" inputmode="numeric" maxlength="6" onkeydown="if(event.key==='Enter')pinOk()" aria-label="PIN"><p class="c" id="fb"></p><div class="row"><button class="btn" onclick="pinOk()">Open</button><button class="pill" onclick="who?home():pick()">Back</button></div>`)}
+function pinOk(){if($("#ans").value===(S.pin||"1234"))parent2();else $("#fb").textContent="Incorrect PIN"}
+function parent2(){const rows=w=>{const L=S.log.filter(l=>l.who===w);const td=L.filter(l=>l.d===today()&&!l.pr).length;const avg=L.length?Math.round(L.reduce((a,l)=>a+l.sc/l.n,0)/L.length*100):0;const ck=(S.checks||[]).filter(c=>c.who===w).slice(-1)[0];const wk=L.filter(l=>Date.now()-l.t<6048e5&&!l.pr);const ar=Object.keys(AREAS).map(a=>{const x=L.filter(l=>l.area===a);return[a,x.length?x.reduce((s,l)=>s+l.sc/l.n,0)/x.length:null]}).filter(z=>z[1]!==null).sort((p,q)=>p[1]-q[1]);
+ return `<div class="card" style="font-size:16px;font-weight:400;text-align:left"><b>${P[w].n} (Year ${P[w].yr})</b><br>Sessions: ${L.length} · Today: ${td}/${goal()} · Average: ${avg}%<br>This week: ${wk.length} session${wk.length===1?"":"s"} on ${new Set(wk.map(l=>l.d)).size} day(s) · ${wk.reduce((s,l)=>s+l.sc,0)} stars<br>Skills: ${Object.keys(AREAS).map(a=>AREAS[a][1]+" "+skl(a,w).join(" ")).join(" · ")}<br>Star Challenge: ${ck?`${ck.d} · Year ${ck.p}: ${ck.kc}/4 · Year ${ck.p+1}: ${ck.kn}/8 → ${{ready:"Ready for the Year "+(ck.p+1)+" programme",almost:"Almost ready: keep practising, then retry",consolidate:"Consolidate Year "+ck.p+" first"}[ck.rec]}`:"not taken yet"}<br>Programme year: <select onchange="setProg('${w}',this.value)" style="font:inherit;padding:4px;border-radius:8px">${[1,2,3,4,5].map(x=>`<option${x===prog(w)?" selected":""}>${x}</option>`).join("")}</select><br>Needs practice: ${ar.length?AREAS[ar[0][0]][0]:"none yet"}<br>Difficulty level: ${S.lvl[w]>0?"+":""}${S.lvl[w]} · Vault: ${S.vault[w].length} · Items: ${S.items[w].length}
+ <table>${L.slice(-5).reverse().map(l=>`<tr><td>${l.d}</td><td>${AREAS[l.area][0]}</td><td>${l.sc}/${l.n}</td><td>${l.r}</td></tr>`).join("")||"<tr><td>No sessions yet</td></tr>"}</table></div>`};
+ R(`<h1>Parent dashboard</h1>${rows("leah")}${rows("lena")}<p class="c">Praise stamp sent after each session:<br><select onchange="S.stamp=this.value;save()" style="font:inherit;padding:6px;border-radius:10px">${["⭐ Amazing work today!","💖 So proud of you!","🌟 Brain power!","🎉 High five!"].map(x=>`<option${x===S.stamp?" selected":""}>${x}</option>`).join("")}</select></p><p class="c">Daily adventures before review mode: <select onchange="S.goal=+this.value;save()" style="font:inherit;padding:6px;border-radius:10px">${[1,2,3].map(x=>`<option${x===goal()?" selected":""}>${x}</option>`).join("")}</select></p>${noteBox("leah")}${noteBox("lena")}${rdPanel("leah")}${rdPanel("lena")}${voicePanel()}<p class="c"><label><input type="checkbox" ${S.calm?"checked":""} onchange="S.calm=this.checked;save()"> Calm mode (no confetti or sounds)</label></p><p class="c"><input id="np" inputmode="numeric" maxlength="6" placeholder="New PIN" style="font:inherit;padding:6px;border-radius:10px;width:110px"><button class="pill" onclick="if($('#np').value.length>=4){S.pin=$('#np').value;save();this.textContent='Saved ✓'}">Change PIN</button></p><div class="row"><button class="btn" onclick="who?home():pick()">Back</button><button class="pill" onclick="report()">📄 Weekly report</button><button class="pill" onclick="backup()">💾 Backup</button><button class="pill" onclick="if(this.dataset.s){try{localStorage.removeItem('nzma')}catch(e){}location.reload()}else{this.dataset.s=1;this.textContent='Tap again to erase everything'}">Reset data</button></div>`)}
+pick();
+function cmp(t){const m=t<3?20:t<4?99:999;let x=r(2,m),y=r(2,m);while(y===x)y=r(2,m);const big=r(0,1);return{q:`Which number is ${big?"bigger":"smaller"}?`,a:big?Math.max(x,y):Math.min(x,y),o:[x,y],h:`Look at the ${m>99?"hundreds":"tens"} first. The number with more ${m>99?"hundreds":"tens"} is bigger.`}}
+function tm(t){const h=r(1,12);if(t<3&&r(0,1))return pk(t<2?[()=>cset(h),()=>cl(h,30,"half past")]:[()=>cset(h),()=>cl(h,30,"half past"),()=>cl(h,15,"quarter past")])();if(t<3)return{q:clock(h,0)+"<br>What time is it? The hour is…",a:h,h:`The short hand points to ${h} and the long hand points to 12. It is ${h} o’clock.`};const m=pk([15,30,45]);return{q:clock(h,m)+`<br>How many minutes past ${h}?`,a:m,h:"Long hand on 3 is 15 minutes, on 6 is 30, on 9 is 45. Count by 5s around the clock."}}
+function clock(h,m){const p=(a,l)=>`${(50+l*Math.sin(a*Math.PI/180)).toFixed(1)}" y2="${(50-l*Math.cos(a*Math.PI/180)).toFixed(1)}`;let n="";for(let i=1;i<=12;i++)n+=`<text x="${(50+38*Math.sin(i*Math.PI/6)).toFixed(1)}" y="${(54-38*Math.cos(i*Math.PI/6)).toFixed(1)}" font-size="11" text-anchor="middle" fill="#222">${i}</text>`;return `<svg viewBox="0 0 100 100" role="img" aria-label="Clock" style="width:150px"><circle cx="50" cy="50" r="47" fill="#fff" stroke="#c2347f" stroke-width="3"/>${n}<line x1="50" y1="50" x2="${p((h%12+m/60)*30,24)}" stroke="#222" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="50" x2="${p(m*6,36)}" stroke="#c2347f" stroke-width="2.5" stroke-linecap="round"/></svg>`}
+var RT;
+function prog(w){return((S.prog||{})[w])||P[w].yr}
+function setProg(w,v){S.prog=S.prog||{};S.prog[w]=+v;S.lvl[w]=0;save();parent2()}
+function stars(w){return S.log.filter(l=>l.who===w).reduce((s,l)=>s+l.sc,0)+((S.bonus||{})[w]||0)}
+function sess(w){return S.log.filter(l=>l.who===w&&!l.pr).length}
+const STK=[["first","🌟","First adventure",w=>sess(w)>=1],["five","🖐️","5 adventures",w=>sess(w)>=5],["ten","🔟","10 adventures",w=>sess(w)>=10],["streak","🔥","3-day streak",w=>streak(w)>=3],["s50","⭐","50 stars",w=>stars(w)>=50],["s200","🏆","200 stars",w=>stars(w)>=200],["strong","💪","A Strong skill",w=>Object.keys(AREAS).some(a=>skl(a,w)[1]==="Strong")],["four","🗺️","All 4 areas explored",w=>Object.keys(AREAS).every(a=>S.log.some(l=>l.who===w&&l.area===a&&!l.pr))],["perfect","💯","Perfect 10",w=>S.log.some(l=>l.who===w&&!l.pr&&l.n===10&&l.sc===10)],["race","⚡","Number Race: 10+",w=>((S.best||{})[w]||0)>=10],["chal","🧪","Star Challenge done",w=>(S.checks||[]).some(c=>c.who===w)],["dress","👗","Dressed up (3 items)",w=>((S.wear||{})[w]||[]).length>=3]];
+function stk(){const e=(S.stk=S.stk||{leah:[],lena:[]})[who],nw=[];STK.forEach(s=>{if(!e.includes(s[0])&&s[3](who)){e.push(s[0]);nw.push(s)}});if(nw.length)save();return nw}
+function book(){stk();const e=S.stk[who];R(`<button class="pill" onclick="home()">⬅ Back</button><h1>Sticker Book</h1><div class="g2">${STK.map(s=>`<div class="card" style="font-size:16px;${e.includes(s[0])?"":"opacity:.35;filter:grayscale(1)"}"><div style="font-size:40px">${s[1]}</div>${s[2]}</div>`).join("")}</div><p class="c">${e.length} of ${STK.length}</p>`)}
+function pcard(){const e=(S.stk||{})[who]||[],w=(S.wear||{})[who]||[],sk2=Object.keys(AREAS).map(a=>AREAS[a][1]+" "+skl(a,who).join(" ")),tx=`${P[who].n} · Year ${prog(who)} programme\n⭐ ${stars(who)} stars · 🔥 ${streak()} day streak · 🏅 ${e.length} stickers\n${sk2.join("\n")}`;R(`<button class="pill" onclick="home()">⬅ Back</button><div class="card" style="border:4px solid var(--acc)"><div style="font-size:44px">${av(who)}<br>${w.map(x=>x.split(" ")[0]).join("")}</div>${P[who].n}<br><span style="font-size:18px;font-weight:400">Year ${prog(who)} programme</span><br>⭐ ${stars(who)} · 🔥 ${streak()} · 🏅 ${e.length}<div style="font-size:16px;font-weight:400">${sk2.join("<br>")}</div></div><p class="c">📸 Screenshot to share, or copy the text:</p><textarea readonly rows="5" style="width:100%;font:inherit;font-size:15px;border-radius:12px;padding:8px">${tx}</textarea>`)}
+function rq(t){let a,b;if(t<=1){a=r(1,9);b=r(1,10-a);return{q:`${a} + ${b}`,a:a+b}}
+ if(t===2){if(r(0,1)){a=r(2,12);b=r(2,20-a);return{q:`${a} + ${b}`,a:a+b}}a=r(8,20);b=r(1,a-1);return{q:`${a} − ${b}`,a:a-b}}
+ if(t===3){if(r(0,1)){a=r(10,60);b=r(10,39);return{q:`${a} + ${b}`,a:a+b}}a=pk([2,5,10]);b=r(2,10);return{q:`${a} × ${b}`,a:a*b}}
+ if(t>=5&&r(0,1)){a=r(11,25);b=r(3,9);return{q:`${a} × ${b}`,a:a*b}}
+ if(r(0,2)){a=r(2,10);b=r(2,10);return{q:`${a} × ${b}`,a:a*b}}b=r(2,10);a=b*r(2,10);return{q:`${a} ÷ ${b}`,a:a/b}}
+function race(){const k=who+today();S.rc=S.rc||{};if((S.rc[k]||0)>=3){R(`<button class="pill" onclick="home()">⬅ Back</button><p class="note">⚡ That’s 3 races today. Come back tomorrow!</p>`);return}S.rc[k]=(S.rc[k]||0)+1;save();let tm=60,sc=0,cur=rq(tier());
+ R(`<button class="pill" onclick="quit(this)">⬅ Back</button><h1>⚡ Number Race</h1><p class="c" id="rt">60</p><div class="card" id="rq"></div><input id="ans" inputmode="numeric" pattern="[0-9]*" aria-label="Answer"><p class="c" id="rs">Score: 0</p>`);
+ const show=()=>{$("#rq").textContent=cur.q+" = ?"},inp=$("#ans");show();if(inp.focus)inp.focus();
+ inp.oninput=()=>{const v=inp.value;if(v.length>=String(cur.a).length){if(+v===cur.a){sc++;snd(660,.08)}else snd(220,.12);inp.value="";cur=rq(tier());show();$("#rs").textContent="Score: "+sc}};
+ clearInterval(RT);RT=setInterval(()=>{tm--;$("#rt").textContent=tm;if(tm<=0)raceEnd(sc)},1000)}
+function raceEnd(sc){clearInterval(RT);S.best=S.best||{};const nb=sc>(S.best[who]||0);if(nb)S.best[who]=sc;S.bonus=S.bonus||{};S.bonus[who]=(S.bonus[who]||0)+Math.floor(sc/5);save();const nw=stk();confetti();R(`<h1>⏱️ Time’s up!</h1><div class="card">${sc} correct<br>${nb?"🎉 New best!":"Best: "+S.best[who]}<br>+${Math.floor(sc/5)} ⭐</div>${nw.length?`<p class="note">🏅 New sticker: ${nw.map(x=>x[1]+" "+x[2]).join(", ")}</p>`:""}<div class="row"><button class="btn" onclick="race()">Race again</button><button class="pill" onclick="home()">Back to map</button></div>`)}
+function chkOk(){return prog(who)<5&&sess(who)>=3&&!(S.checks||[]).some(c=>c.who===who&&Date.now()-c.t<6048e5)}
+function startCheck(){const p=prog(who),qs=[];Object.keys(AREAS).forEach(a=>{qs.push({...gen(a,p),area:a,k:"kc"});qs.push({...gen(a,p+1),area:a,k:"kn"});qs.push({...gen(a,p+1),area:a,k:"kn"})});qs.sort(()=>Math.random()-.5);ss={a:"num",qs,i:0,sc:0,miss:[],tr:0,pr:true,chk:1,kc:0,kn:0};ask()}
+function chkEnd(){const rec=ss.kc>=3&&ss.kn>=6?"ready":ss.kc<3?"consolidate":"almost";(S.checks=S.checks||[]).push({who,t:Date.now(),d:today(),p:prog(who),kc:ss.kc,kn:ss.kn,rec});S.checks=S.checks.slice(-20);save();const nw=stk(),tot=ss.kc+ss.kn;confetti();R(`<h1>⭐ Star Challenge done!</h1><div class="card">${tot} / 12<br>Great thinking, ${P[who].n}!</div><p class="note">A grown-up can see your next step in the parent area.</p>${nw.length?`<p class="note">🏅 New sticker: ${nw.map(x=>x[1]+" "+x[2]).join(", ")}</p>`:""}<div class="row"><button class="btn" onclick="home()">Back to map</button></div>`);ss=null}
+function nx(t){const k=r(0,2);
+ if(t===1){if(k===0){let n=r(1,19);return{q:`What number comes after ${n}?`,a:n+1,h:`Count on one more from ${n}.`}}
+ if(k===1){let n=r(2,20);return{q:`What number comes before ${n}?`,a:n-1,h:`Count back one from ${n}.`}}
+ let x=r(1,9);return{q:`${x} + ? = 10`,a:10-x,h:dots(x,"🟣")+"<br>How many more make 10?"}}
+ if(t===2){if(k===0){let n=r(10,89);return{q:`What is 10 more than ${n}?`,a:n+10,h:"Add one ten: the tens digit goes up by 1."}}
+ if(k===1){let n=r(20,99);return{q:`What is 10 less than ${n}?`,a:n-10,h:"Take away one ten: the tens digit goes down by 1."}}
+ let n=r(21,98);return{q:`What number comes after ${n}?`,a:n+1,h:`Count on one more from ${n}.`}}
+ if(t===3){if(k===0){let x=r(2,9)*10+r(5,9),y=r(1,x%10);return{q:`${x} − ${y} = ?`,a:x-y,h:`Subtract the ones: ${x%10} − ${y}. Keep the tens.`}}
+ if(k===1){let n=r(101,899);return{q:`What is 100 more than ${n}?`,a:n+100,h:"Add one hundred: the hundreds digit goes up by 1."}}
+ let x=pk([3,4]),y=r(2,6);return{q:`${x} × ${y} = ?`,a:x*y,h:`${y} groups of ${x}:<br>`+Array(y).fill(dots(x,"⭐")).join(" | ")}}
+ if(k===0){const o=r(0,7),tn=r(3,9),x=tn*10+o,y=r(o+1,9);return{q:`${x} − ${y} = ?`,a:x-y,h:`You can’t take ${y} from ${o}. Break one ten: ${x} = ${tn-1} tens and ${o+10} ones. Then subtract.`}}
+ if(k===1){let y=pk([2,5,10]),z=r(2,10);return{q:`${y*z} ÷ ${y} = ?`,a:z,h:`How many groups of ${y} fit in ${y*z}? Think ${y} × ? = ${y*z}.`}}
+ let x=pk([3,4,6,7]),y=r(3,9);return{q:`${x} × ${y} = ?`,a:x*y,h:`Skip count by ${x}, ${y} times.`}}
+Object.defineProperty(AREAS,"fnd",{value:["Foundations","🔵"]});
+PL.royal.fnd="Pearl Beach";PL.kpop.fnd="Dot Dome";
+C.fnd=["Look, count and name the shapes!","Spot how many at a glance, count in rows, and name the shapes."];
+const DP={1:["🔴"],2:["🔴 🔴"],3:["🔴","🔴 🔴"],4:["🔴 🔴","🔴 🔴"],5:["🔴 🔴","🔴","🔴 🔴"],6:["🔴 🔴 🔴","🔴 🔴 🔴"]};
+function fnd(t){const k=r(0,3),nv=(h,c)=>`<span class="nv${c}">${h}</span>`;
+ if(k===3)return cnts(t);
+ if(k===0){if(t<2){const n=r(1,6);return{q:`${nv(DP[n].join("<br>")," fl")}<br>How many dots did you see?`,a:n,h:DP[n].join("<br>")+`<br>Count them: ${n}.`}}
+  const x=r(1,5),y=r(1,5),both=DP[x].join("<br>")+"<br>➕<br>"+DP[y].join("<br>");return{q:`${nv(both," fl")}<br>How many dots altogether?`,a:x+y,h:both+`<br>${x} + ${y} = ${x+y}`}}
+ if(k===1){const n=t<2?r(5,12):r(10,20),s=Array.from({length:n},(_,i)=>"⭐"+((i+1)%5===0&&i+1<n?"<br>":" ")).join("");return{q:`${nv(s,"")}<br>How many stars?`,a:n,h:"Count in rows of 5: 5, 10, 15… then count the rest."}}
+ const S3=[["🔺","triangles"],["🟦","squares"],["🔵","circles"],["⭐","stars"]].slice(0,t<2?3:4),c=S3.map(()=>r(1,5)),all=[];S3.forEach((s,i)=>{for(let j=0;j<c[i];j++)all.push(s[0])});all.sort(()=>Math.random()-.5);const i=r(0,S3.length-1);
+ return{q:`${nv(all.join(" "),"")}<br>How many ${S3[i][1]} (${S3[i][0]})?`,a:c[i],h:`Touch each ${S3[i][0]} and count out loud.`}}
+function wp(t){const it=K()?pk(["stars ⭐","mics 🎤","stickers 🎫"]):pk(["gems 💎","roses 🌹","crowns 👑"]),nm=pk(["Mia","Sam","Aroha","Tama","Kiri","Ben"]),w=it.split(" ")[0],e=it.split(" ")[1],k=r(0,2),H="Pick out the numbers. Is it adding, taking away, sharing or groups?";
+ if(t<=2){const a=r(2,8),b=r(1,Math.min(5,10-a));
+  if(k===0)return{q:`${nm} has ${a} ${w}. ${b} more arrive. How many ${w} now?`,a:a+b,h:`Numbers: ${a} and ${b}. “More” means add.<br>${dots(a,e)} + ${dots(b,e)}`};
+  if(k===1)return{q:`${nm} has ${a+b} ${w}. ${b} are given away. How many are left?`,a:a,h:`Numbers: ${a+b} and ${b}. “Given away” means take away.<br>${dots(a+b,e)}`};
+  const g=r(2,4);return{q:`Each of ${g} friends gets 2 ${w}. How many ${w} altogether?`,a:2*g,h:`${g} groups of 2.<br>${Array(g).fill(dots(2,e)).join(" | ")}`}}
+ if(t===3){
+  if(k===0){const a=r(20,50),b=r(5,19);return{q:`${nm} has $${a} and buys a book for $${b}. How much is left?`,a:a-b,h:H}}
+  if(k===1){const g=pk([2,3,4,5]),n=g*r(2,6);return{q:`${n} ${w} are shared equally between ${g} friends. How many does each friend get?`,a:n/g,h:H}}
+  const a=r(2,4),b=r(3,5),c=r(1,6);return{q:`${nm} has ${a} bags with ${b} ${w} in each, and ${c} extra ${w}. How many ${w} altogether?`,a:a*b+c,h:H}}
+ if(t===4){
+  if(k===0){const p=r(4,8),n=r(3,6),c=r(2,p);return{q:`A pack has ${p} ${w}. ${nm} buys ${n} packs and gives away ${c}. How many are left?`,a:p*n-c,h:H}}
+  if(k===1){const p=r(4,9),n=r(3,5);return{q:`Tickets cost $${p} each. ${nm} buys ${n} tickets and pays with a $50 note. How much change?`,a:50-p*n,h:H}}
+  const p=r(8,15),d=r(4,7),tot=p*d+r(5,30);return{q:`${nm} reads ${p} pages a day for ${d} days. The book has ${tot} pages. How many pages are left?`,a:tot-p*d,h:H}}
+ if(k===0){const g=pk([2,4,5]),n=g*r(2,4),p=r(3,9);return{q:`${nm} has ${n} bags with ${p} ${w} each. She shares them equally between ${g} friends. How many does each friend get?`,a:n*p/g,h:H}}
+ if(k===1){const p=r(30,60),d=r(5,15),n=r(2,4);return{q:`A jacket costs $${p}. It has $${d} off. ${nm} buys ${n} jackets. How much is that altogether?`,a:(p-d)*n,h:H}}
+ const a=r(5,12),wk=r(6,10),s=r(5,a*wk-5);return{q:`${nm} saves $${a} each week for ${wk} weeks, then spends $${s}. How much is left?`,a:a*wk-s,h:H}}
+function y5(a){const k=r(0,5),L=n=>n.join(", "),sh=x=>x.slice().sort(()=>Math.random()-.5);
+ if(a==="num"){
+  if(k===0){const x=r(11,25),y=r(3,9),T=Math.floor(x/10)*10;return{q:`${x} × ${y} = ?`,a:x*y,h:`Split ${x} into ${T} and ${x%10}. Do ${T} × ${y}, then ${x%10} × ${y}, then add.`}}
+  if(k===1){const b=r(3,9),c=r(4,12);return{q:`${b*c} ÷ ${b} = ?`,a:c,h:`Think of the ${b} times table: ${b} × ? = ${b*c}.`}}
+  if(k===2){const x=r(100,499),y=r(100,399);return{q:`${x} + ${y} = ?`,a:x+y,h:"Add the hundreds, then the tens, then the ones."}}
+  if(k===3){const x=r(300,900),y=r(100,x-50);return{q:`${x} − ${y} = ?`,a:x-y,h:"Take away the hundreds, then the tens, then the ones. Regroup if you need to."}}
+  if(k===4){const z=r(2,9);return r(0,1)?{q:`What is a fifth of ${5*z}?`,a:z,h:`Share ${5*z} into 5 equal groups.`}:{q:`What is three quarters of ${4*z}?`,a:3*z,h:`Find one quarter (${4*z} ÷ 4), then multiply by 3.`}}
+  return wp(5)}
+ if(a==="mea"){
+  if(k===0){const l=r(5,15),w=r(2,l-1);return{q:`A rectangle is ${l} cm long and ${w} cm wide. What is its perimeter in cm?`,a:2*(l+w),h:`Perimeter is the distance all the way round: ${l} + ${w} + ${l} + ${w}.`}}
+  if(k===1){const m=r(2,9),u=pk([["cm","m",100],["mL","L",1000],["g","kg",1000]]);return{q:`How many ${u[0]} are in ${m} ${u[1]}?`,a:m*u[2],h:`1 ${u[1]} = ${u[2]} ${u[0]}. Multiply ${m} × ${u[2]}.`}}
+  if(k===2){const h=r(1,10),mm=pk([10,20,30,40,50]);return{q:`A film starts at ${h}:${mm} and ends at ${h+1}:15. How many minutes long is it?`,a:75-mm,h:`Count up to ${h+1}:00 (${60-mm} minutes), then add 15 more.`}}
+  if(k===3){const p=[r(10,30),r(10,30),r(10,30)];return{q:`You buy items costing $${p[0]}, $${p[1]} and $${p[2]}. You pay with a $100 note. How much change?`,a:100-p[0]-p[1]-p[2],h:"Add the prices first, then count up to $100."}}
+  if(k===4){const l=r(3,9),w=r(3,9);return{q:`A rectangle is ${l} cm long and ${w} cm wide. What is its area in square cm?`,a:l*w,h:`${w} rows of ${l} squares: ${l} × ${w}.`}}
+  const x=r(10,25),d=r(1,9);return{q:`It is ${x}°C. The temperature drops ${d} degrees. What is the new temperature in °C?`,a:x-d,h:`Count back ${d} from ${x}.`}}
+ if(a==="geo"){const G=[["How many degrees are in a right angle?",90,"📐","A right angle is a square corner."],["How many sides does an octagon have?",8,"🛑","Octa means eight."],["How many lines of symmetry does a regular octagon have?",8,"🛑","One for each corner."],["How many faces does a rectangular prism have?",6,"📦","Top, bottom, front, back and two sides."],["How many edges does a triangular prism have?",9,"🔺","6 on the two triangles, plus 3 joining them."],["How many corners (vertices) does a triangular prism have?",6,"🔺","3 on each triangle end."],["How many sides does a decagon have?",10,"🔟","Deca means ten."],["How many degrees are in a straight line?",180,"➖","A straight line is two right angles."]],g=pk(G);return{q:g[0],a:g[1],h:`<span style="font-size:40px">${g[2]}</span><br>${g[3]}`}}
+ if(k===0){const n=[];while(n.length<5){const v=r(2,20);if(!n.includes(v))n.push(v)}const s=n.slice().sort((p,q)=>p-q);return{q:`Find the median: ${L(sh(n))}`,a:s[2],h:`Put them in order: ${L(s)}. The median is the middle one.`}}
+ if(k===1){let n,m;do{const t3=[r(2,14),r(2,14),r(2,14)];m=r(5,12);n=[...t3,4*m-t3[0]-t3[1]-t3[2]]}while(n[3]<1||n[3]>20);return{q:`What is the mean of ${L(n)}?`,a:m,h:`Add them all up (${n.reduce((p,q)=>p+q,0)}), then divide by 4.`}}
+ if(k===2){const n=[r(2,9),r(10,15),r(5,12),r(16,25)];return{q:`The scores are ${L(sh(n))}. What is the range (biggest minus smallest)?`,a:Math.max(...n)-Math.min(...n),h:"Find the biggest and the smallest, then subtract."}}
+ if(k===3){const m=r(2,15),n=[m,m,m];while(n.length<6){const v=r(2,15);if(v!==m&&!n.includes(v))n.push(v)}return{q:`What is the mode (the number that appears most)? ${L(sh(n))}`,a:m,h:"The mode is the number that shows up the most times."}}
+ const E=[["🍎","apples"],["🍌","bananas"],["🍇","grapes"]],c=E.map(()=>r(3,15));
+ if(k===4)return{q:`${bar(c,E)}<br>How many fruit altogether?`,a:c[0]+c[1]+c[2],h:`Read each bar, then add: ${c.join(" + ")}.`};
+ const i=r(0,2),j=(i+1)%3;c[i]=c[j]+r(1,5);return{q:`${bar(c,E)}<br>How many more ${E[i][1]} than ${E[j][1]}?`,a:c[i]-c[j],h:"Read both bars. Subtract the smaller from the bigger."}}
+function enc(){return btoa(unescape(encodeURIComponent(JSON.stringify(S))))}
+function backup(){S.bt=Date.now();save();R(`<button class="pill" onclick="parent2()">⬅ Back</button><h1>Backup / Restore</h1><p class="c">Copy this code and keep it safe. To move to another device: open this page there, go to 👪 then Backup, paste the code and tap Restore. Use one device at a time.</p><textarea id="bk" readonly rows="4" style="width:100%;font-size:13px;border-radius:10px;padding:6px">${enc()}</textarea><div class="row"><button class="pill" onclick="try{navigator.clipboard.writeText($('#bk').value).then(()=>{this.textContent='Copied ✓'},()=>$('#bk').select())}catch(e){$('#bk').select()}">📋 Copy</button></div><p class="c">Restore from a code (this replaces progress on this device):</p><textarea id="rs2" rows="3" style="width:100%;font-size:13px;border-radius:10px;padding:6px"></textarea><div class="row"><button class="pill" onclick="doRestore(this)">♻️ Restore</button></div><p class="c" id="rm"></p>`)}
+function doRestore(b){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($("#rs2").value.trim()))))}catch(e){$("#rm").textContent="That code didn’t work. Check you copied all of it.";return}
+ if(!o||!o.lvl||!Array.isArray(o.log)||!o.vault){$("#rm").textContent="That doesn’t look like a backup code.";return}
+ if(!b.dataset.s){const cur=S.log.length,inc=o.log.length;$("#rm").textContent=`Code made ${o.bt?new Date(o.bt).toLocaleString("en-NZ"):"(date unknown)"}: ${inc} sessions. This device has ${cur}.${cur>inc?" ⚠️ This device has MORE progress.":""}`;b.dataset.s=1;b.textContent="Tap again to replace progress";return}
+ S=o;save();who=null;pick()}
+function report(){const rows=w=>{const L=S.log.filter(l=>l.who===w&&!l.pr),wk=L.filter(l=>Date.now()-l.t<6048e5),ck=(S.checks||[]).filter(c=>c.who===w).slice(-1)[0],ar=Object.keys(AREAS).map(a=>{const x=L.filter(l=>l.area===a);return[a,x.length?x.reduce((s,l)=>s+l.sc/l.n,0)/x.length:null]}).filter(z=>z[1]!==null).sort((p,q)=>p[1]-q[1]);
+ return `<div class="card" style="font-size:16px;font-weight:400;text-align:left"><b>${P[w].n} · Year ${prog(w)} programme</b><br>This week: ${wk.length} session(s) on ${new Set(wk.map(l=>l.d)).size} day(s) · ${wk.reduce((s,l)=>s+l.sc,0)} stars<br>Total stars: ${stars(w)} · Streak: ${streak(w)} day(s)<br>${Object.keys(AREAS).map(a=>AREAS[a][1]+" "+AREAS[a][0]+": "+skl(a,w).join(" ")).join("<br>")}<br>Focus next: ${ar.length?AREAS[ar[0][0]][0]:"keep exploring"}<br>Star Challenge: ${ck?ck.d+" · "+ck.kc+"/4 current year, "+ck.kn+"/8 next year":"not taken yet"}<br>🌟 Wins: ${wins(w)}<br>Mistake Vault: ${S.vault[w].length} to revisit${(S.notes||{})[w]?`<br>School notes: ${esc(S.notes[w])}`:""}</div>`};
+ R(`<div class="noprint"><button class="pill" onclick="parent2()">⬅ Back</button></div><h1>Weekly report</h1><p class="c">${new Date().toLocaleDateString("en-NZ")}</p>${rows("leah")}${rows("lena")}<div class="row noprint"><button class="btn" onclick="try{window.print()}catch(e){}">🖨️ Print</button></div><p class="c noprint">If Print doesn’t open, take a screenshot.</p>`)}
+const LS={clock:["🕒","Reading a clock","The short hand shows the hour. The long hand shows the minutes. Long hand on 12 means o’clock. Long hand on 6 means half past. Long hand on 3 means quarter past.","Short hand on 3 and long hand on 6 → half past 3."],
+graph:["📊","Reading a graph","Look at the labels first. Then read each picture or bar. On a bar graph, follow the top of the bar across to the number on the side. In a tally chart, each group of 5 has a line through it, so count in 5s.","The bar reaches the line marked 5 → the value is 5."],
+stats:["📈","Median, mean, mode and range","Median: put the numbers in order and take the middle one. Mean: add them all up, then divide by how many there are. Mode: the number that appears most. Range: biggest minus smallest.","3, 5, 5, 9, 13 → median 5, mode 5, range 10."],
+frac:["🍕","Fractions of an amount","A half means share into 2 equal groups. A quarter means 4 equal groups. A fifth means 5 equal groups. Divide to find one group.","A quarter of 20: 20 ÷ 4 = 5."],
+perim:["📏","Perimeter and area","Perimeter is the distance all the way round a shape: add every side. Area is the space inside: multiply length by width.","A 5 cm by 3 cm rectangle: perimeter 5+3+5+3 = 16 cm. Area 5 × 3 = 15 square cm."],
+money:["💰","Money and change","Add the coins and notes, biggest first. For change, count up from the price to the amount you paid.","Pay $10 for $6: count up from 6 to 10. That is $4 change."],
+wp:["📖","Word problems","Read it twice. Pick out the numbers. Ask: am I joining, taking away, sharing or making groups? Then do the sum.","6 packs of 4 are groups, so 6 × 4 = 24."],
+regroup:["🔟","Take away with regrouping","If the ones digit is too small, break one ten into 10 ones. Then subtract the ones, then the tens.","52 − 7: 52 is 4 tens and 12 ones. 12 − 7 = 5, so the answer is 45."],
+times:["✖️","Times tables and sharing","Multiplying means equal groups. Dividing means sharing equally. A times fact and a sharing fact go together.","4 × 5 = 20, so 20 ÷ 5 = 4."],
+place:["🧱","Place value","Each digit has a place: ones, tens, hundreds. Ten more changes the tens digit. A hundred more changes the hundreds digit.","47 is 4 tens and 7 ones. 10 more is 57."],
+pattern:["🔢","Number patterns","Find the step between the numbers: how much does it go up or down each time? Then keep going. Doubles mean the same number twice.","2, 4, 6, 8 goes up by 2, so the next is 10."],
+sym:["🦋","Symmetry","A shape has a line of symmetry if you can fold it so both halves match exactly. Some shapes have more than one fold line.","A square has 4 lines of symmetry."],
+dots:["🔴","Seeing numbers fast","Try to see the dots as groups, like on a dice, instead of counting one by one. 2 and 2 make 4. 3 and 3 make 6.","The pattern for 5 is four corners and one in the middle."],
+count:["🗣️","Counting patterns","Say the numbers out loud in a steady rhythm. Counting by 2s, 5s and 10s skips numbers. Counting back goes down.","Count by 5s: 5, 10, 15, 20."]};
+function topicOf(x){const s=x.q||"";
+ if(/aria-label="Clock"|Set the clock/.test(s))return"clock";
+ if(/aria-label="Bar graph"|class="pg"/.test(s))return"graph";
+ if(/median|mean of|the mode|range \(/.test(s))return"stats";
+ if(/half of|quarter of|fifth of|three quarters/.test(s))return"frac";
+ if(/perimeter|area in square/.test(s))return"perim";
+ if(/coins|\$\d+ note|change/.test(s))return"money";
+ if(/ has |buys|costs \$|saves \$|shared equally|Each of \d+ friends|reads \d+ pages/.test(s))return"wp";
+ if(/^\d+ − \d+ = \?$/.test(s)&&+s.split(" ")[0]>=20)return"regroup";
+ if(/[×÷]/.test(s))return"times";
+ if(/How many tens|more than \d|less than \d/.test(s))return"place";
+ if(/missing|\? \+|Double|\+ \? =/.test(s))return"pattern";
+ if(/symmetry/.test(s))return"sym";
+ if(/did you see|dots altogether/.test(s))return"dots";
+ if(/^Count|What comes next/.test(s))return"count";
+ return null}
+function lesson(tp,after){const L=LS[tp];if(!L){ask();return}ss.after=after;ss.lt=L[2]+" Example: "+L[3];R(`<button class="pill" onclick="lessonGo()">⬅ Skip</button><div class="card"><div style="font-size:64px">${L[0]}</div>${L[1]}</div><div class="hint">${L[2]}<br><b>Example: ${L[3]}</b></div><div class="row"><button class="btn" onclick="lessonGo()">${after==="back"?"Back to question":"Got it ▶"}</button><button class="pill" onclick="lsay()" aria-label="Read aloud">🔊</button></div>`);lsay()}
+function lsay(){say(txt(ss.lt.replace(/→/g," so ").replace(/÷/g," divided by ")))}
+function lessonGo(){try{speechSynthesis.cancel()}catch(e){}const a=ss.after;a==="concept"?concept():ask()}
+var ckh=1;
+function ckm(d){ckh=((ckh-1+d)%12+12)%12+1;$("#ck").innerHTML=clock(ckh,0);$("#ans").value=ckh}
+function cset(h){return{q:`Set the clock to ${h} o’clock.<br><span class="nv"><div id="ck">${clock(1,0)}</div><div class="row"><button class="pill" onclick="ckm(-1)" aria-label="Earlier hour">◀</button><button class="pill" onclick="ckm(1)" aria-label="Later hour">▶</button></div></span>`,a:h,set:1,h:`Tap ◀ or ▶ until the short hand points to ${h}. The long hand stays on 12.`}}
+function cl(h,m,w){const o=[h,h%12+1,(h+10)%12+1].sort(()=>Math.random()-.5);return{q:`${clock(h,m)}<br>The clock shows ${w} something. Which hour is it?`,a:h,o,h:`The short hand is at or just past ${h}. The long hand on ${m===30?"6 means half past":"3 means quarter past"}.`}}
+function cnts(t){const st=pk(t<2?[1,1,-1]:[1,-1,2,5,10]),ab=Math.abs(st),f=st===1?r(1,15):st===-1?r(5,20):st===2?2*r(0,10):st===5?5*r(0,10):10*r(0,6),sh=[f,f+st,f+2*st],nx=f+3*st,c=[nx,nx+ab,nx-ab,nx+2*ab].filter((v,i,a)=>v>=0&&a.indexOf(v)===i);return{q:`${st<0?"Count back":"Count"}${ab>1?" by "+ab+"s":""}: ${sh.join(", ")}, …<br>What comes next?`,a:nx,o:c.slice(0,3).sort(()=>Math.random()-.5),h:`Say them out loud: ${sh.join(", ")}… It goes ${st>0?"up":"down"} by ${ab}.`}}
+function streak(w=who){let d=new Date(),n=0,ms=[];for(let idx=0;idx<400;idx++){const k=d.toLocaleDateString("en-NZ");if(S.log.some(l=>l.who===w&&l.d===k&&!l.pr))n++;else if(n===0&&idx===0){}else if(n>0&&!ms.some(m=>idx-m<7))ms.push(idx);else break;d.setDate(d.getDate()-1)}return n}
+function esc(s){return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function rdApply(){const c=(S.rd||{})[who]||{},b=document.body.classList;b.toggle("sz1",c.sz===1);b.toggle("sz2",c.sz===2);b.toggle("dys",!!c.font);b.toggle("sp",!!c.sp)}
+function rdSet(w,k,v){S.rd=S.rd||{};S.rd[w]=S.rd[w]||{};S.rd[w][k]=v;save();rdApply()}
+function rdPanel(w){const c=(S.rd||{})[w]||{};return `<p class="c"><b>${P[w].n}: reading</b><br><select onchange="rdSet('${w}','sz',+this.value)" style="font:inherit;padding:4px;border-radius:8px" aria-label="Text size">${["Normal text","Large text","Extra large text"].map((x,i)=>`<option value="${i}"${(c.sz||0)===i?" selected":""}>${x}</option>`).join("")}</select> <label><input type="checkbox" ${c.font?"checked":""} onchange="rdSet('${w}','font',this.checked?1:0)"> Clear font</label> <label><input type="checkbox" ${c.sp?"checked":""} onchange="rdSet('${w}','sp',this.checked?1:0)"> Wider spacing</label></p>`}
+function setFocus(w,a){S.focus=S.focus||{};S.focus[w]=a?{a,until:Date.now()+6048e5}:null;save()}
+function focusOn(){const fc=(S.focus||{})[who];return!!(fc&&fc.a&&fc.until>Date.now())}
+function noteBox(w){const fc=(S.focus||{})[w],on=fc&&fc.a&&fc.until>Date.now(),opts=[["","None"],["num","Number & Algebra"],["mea","Measurement"],["geo","Geometry"],["sta","Statistics"]].concat(w==="lena"?[["fnd","Foundations"]]:[]);return `<p class="c"><b>${P[w].n}: school notes</b><br><textarea rows="2" style="width:100%;font:inherit;font-size:15px;border-radius:10px;padding:6px" placeholder="e.g. School is on fractions this term" oninput="S.notes=S.notes||{};S.notes['${w}']=this.value" onchange="save()">${esc((S.notes||{})[w])}</textarea><br>School focus this week: <select onchange="setFocus('${w}',this.value)" style="font:inherit;padding:4px;border-radius:8px">${opts.map(o=>`<option value="${o[0]}"${(on?fc.a:"")===o[0]?" selected":""}>${o[1]}</option>`).join("")}</select></p>`}
+function shp2(t){const SH=[["🔵","circle",0],["🔺","triangle",3],["🟦","square",4],["⬟","pentagon",5],["⬡","hexagon",6]],p3=(t<2?SH.slice(0,3):SH).slice().sort(()=>Math.random()-.5).slice(0,3),ti=r(0,2),tg=p3[ti],sd=p3.map(s=>s[2]),ks=[tg[2]===0?"no corners":`${tg[2]} sides`];if(tg[2]===Math.max(...sd))ks.push("the most sides");if(tg[2]===Math.min(...sd))ks.push("the fewest sides");
+ return{q:`<span class="nv">${p3.map((s,i)=>`${i+1} ${s[0]}`).join("&emsp;")}</span><br>Which number is the shape with ${pk(ks)}?`,a:ti+1,o:[1,2,3],h:`Count the sides of each shape. ${tg[0]} is a ${tg[1]}: ${tg[2]} sides.`}}
+function tl(n){return(n>=5?'<span class="nv ty">||||</span>'.repeat(Math.floor(n/5)):"")+(n%5?`<span class="nv">${"|".repeat(n%5)}</span>`:"")}
+function tallyQ(t){const E=[["🍎","apples"],["🍌","bananas"],["🍇","grapes"]],m=t<2?8:t<3?12:16,c=E.map(()=>r(1,m)),tb=`<table class="pg">${E.map((e,i)=>`<tr><th>${e[1][0].toUpperCase()+e[1].slice(1)}</th><td>${tl(c[i])}</td></tr>`).join("")}</table><small>Each group of 5 has a line through it.</small>`,i=r(0,2),j=(i+1)%3;
+ if(t<2||r(0,1))return{q:`${tb}<br>How many ${E[i][1]}?`,a:c[i],h:"Count the groups of 5 first: 5, 10, 15… then the extra lines."};
+ return{q:`${tb}<br>${E[i][1]} + ${E[j][1]} = ?`,a:c[i]+c[j],h:`Count each row in 5s, then add: ${c[i]} + ${c[j]}.`}}
+function moreQ(){const E=[["🍎","apples"],["🍌","bananas"],["🍇","grapes"]],c=E.map(()=>r(1,6)),i=r(0,2),j=(i+1)%3;c[i]=c[j]+r(1,3);return{q:`${pic(c,E)}<br>How many more ${E[i][1]} than ${E[j][1]}?`,a:c[i]-c[j],h:`Match each ${E[j][0]} with an ${E[i][0]}. The ones left over are how many more.`}}
+const TOUR=[["👋","Welcome!","Pick Leah or Lena, then choose a Royal or K-Pop theme. You can switch the theme any time with 🎨."],["🗺️","Adventures","Each adventure is 10 questions. Tap 💡 for a picture hint, 📖 for a mini-lesson and ✏️ for the scratchpad. Two adventures a day, then review mode."],["🏅","Fun extras","Win items for the avatar, collect stickers, race the clock in the Number Race, and take the weekly Star Challenge."],["👪","Grown-ups","The 👪 button opens the parent area. The PIN starts as 1234, so please change it there. Use Backup to keep progress safe."]];
+function tour(i){const T=TOUR[i],last=i+1>=TOUR.length;R(`<div class="card"><div style="font-size:64px">${T[0]}</div>${T[1]}</div><div class="hint">${T[2]}</div><p class="c">${i+1} of ${TOUR.length}</p><div class="row"><button class="btn" onclick="${last?"tourEnd()":`tour(${i+1})`}">${last?"Let’s go!":"Next ▶"}</button><button class="pill" onclick="tourEnd()">Skip</button></div>`)}
+function tourEnd(){S.tour=1;save();who?home():pick()}
+function help(){if($("#q"))return;tour(0)}
+var IMG={};
+function imgOr(k,fb){return(typeof IMG!=="undefined"&&IMG&&IMG[k])?`<img src="${IMG[k]}" alt="" style="max-width:100%;border-radius:18px">`:fb}
+function bgApply(){try{const k=typeof IMG!=="undefined"&&IMG&&IMG["bg_"+S.theme];document.body.style.backgroundImage=k?`url(${k})`:"";document.body.style.backgroundSize=k?"cover":""}catch(e){}}
+function icon(a){const I={num:'<polygon points="32,6 54,24 32,58 10,24" class="ca"/><polygon points="32,6 44,24 32,58 20,24" class="cd"/><polygon points="10,24 54,24 32,16" fill="#fff" opacity=".4"/>',mea:'<rect x="4" y="26" width="56" height="20" rx="5" class="cd sa" stroke-width="3"/><path d="M14 26v8M24 26v12M34 26v8M44 26v12M54 26v8" class="sa" stroke-width="2.5" fill="none"/><circle cx="46" cy="14" r="9" class="ca"/><text x="46" y="18" font-size="11" text-anchor="middle" fill="#fff" font-weight="700">$</text>',geo:'<polygon points="6,56 26,14 46,56" class="ca"/><rect x="30" y="30" width="26" height="26" rx="3" class="cd"/><circle cx="48" cy="18" r="9" fill="#fff" class="sa" stroke-width="3"/>',sta:'<rect x="8" y="34" width="12" height="24" rx="3" class="ca"/><rect x="26" y="18" width="12" height="40" rx="3" class="cd"/><rect x="44" y="26" width="12" height="32" rx="3" class="ca"/>',fnd:'<circle cx="18" cy="20" r="9" class="ca"/><circle cx="46" cy="20" r="9" class="cd"/><circle cx="18" cy="46" r="9" class="cd"/><circle cx="46" cy="46" r="9" class="ca"/>'};return imgOr(`ic_${a}_${S.theme}`,`<svg viewBox="0 0 64 64" aria-hidden="true">${I[a]}</svg>`)}
+function av(w){const k=K(),sk="#f6c9a4",hair=w==="leah"?"#4a2a1a":"#2a1a12",back=w==="leah"?`<rect x="26" y="40" width="68" height="58" rx="26" fill="${hair}"/>`:`<circle cx="26" cy="56" r="14" fill="${hair}"/><circle cx="94" cy="56" r="14" fill="${hair}"/>`,face=`<circle cx="60" cy="58" r="30" fill="${sk}"/><path d="M30 54q4-26 30-26t30 26q-14-12-30-12t-30 12z" fill="${hair}"/><circle cx="49" cy="62" r="4" fill="#2a1a12"/><circle cx="71" cy="62" r="4" fill="#2a1a12"/><path d="M50 74q10 9 20 0" stroke="#b5483a" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="42" cy="70" r="5" fill="#ff9aa8" opacity=".5"/><circle cx="78" cy="70" r="5" fill="#ff9aa8" opacity=".5"/>`,acc=k?'<path d="M26 56a34 34 0 0 1 68 0" class="sd" stroke-width="7" fill="none" stroke-linecap="round"/><rect x="18" y="50" width="12" height="20" rx="6" class="cd"/><rect x="90" y="50" width="12" height="20" rx="6" class="cd"/>':'<path d="M38 32l6-16 8 10 8-14 8 14 8-10 6 16z" class="cd" stroke="#b8860b" stroke-width="2"/>';return imgOr(`av_${w}_${S.theme}`,`<svg viewBox="0 0 120 130" width="120" height="130" role="img" aria-label="${P[w].n}’s avatar">${back}<ellipse cx="60" cy="114" rx="34" ry="22" class="ca"/>${face}${acc}</svg>`)}
+function art(){return imgOr("hero_"+S.theme,K()?'<svg class="hero" viewBox="0 0 360 150" role="img" aria-label="Neon concert stage"><defs><linearGradient id="kb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1470"/><stop offset="1" stop-color="#0d0626"/></linearGradient></defs><rect width="360" height="150" fill="url(#kb)"/><polygon points="70,0 20,112 120,112" fill="#16e0cc" opacity=".22"/><polygon points="180,0 130,112 230,112" fill="#ff3fa8" opacity=".25"/><polygon points="290,0 240,112 340,112" fill="#16e0cc" opacity=".22"/><rect x="0" y="104" width="360" height="46" fill="#35206a"/><rect x="0" y="104" width="360" height="4" fill="#ff3fa8"/><rect x="14" y="60" width="36" height="48" rx="5" fill="#1b0f3d" stroke="#16e0cc" stroke-width="2"/><circle cx="32" cy="76" r="9" fill="#16e0cc" opacity=".7"/><circle cx="32" cy="96" r="5" fill="#ff3fa8"/><rect x="310" y="60" width="36" height="48" rx="5" fill="#1b0f3d" stroke="#16e0cc" stroke-width="2"/><circle cx="328" cy="76" r="9" fill="#16e0cc" opacity=".7"/><circle cx="328" cy="96" r="5" fill="#ff3fa8"/><circle cx="180" cy="60" r="14" fill="#ffd1e8"/><path d="M165 58q15-26 30 0" fill="#120a2a"/><rect x="166" y="74" width="28" height="30" rx="8" fill="#ff3fa8"/><g fill="#ffe14a"><path d="M40 28l4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z"/><path d="M318 22l3 7 8 1-6 5 2 8-7-5-7 5 2-8-6-5 8-1z"/><path d="M250 40l2 5 6 1-4 4 1 6-5-3-5 3 1-6-4-4 6-1z"/></g><g fill="#0a0520"><circle cx="30" cy="150" r="14"/><circle cx="70" cy="152" r="15"/><circle cx="290" cy="150" r="14"/><circle cx="330" cy="152" r="15"/></g></svg>':'<svg class="hero" viewBox="0 0 360 150" role="img" aria-label="Sunny royal castle"><defs><linearGradient id="rb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc8e6"/><stop offset="1" stop-color="#fff3d6"/></linearGradient></defs><rect width="360" height="150" fill="url(#rb)"/><circle cx="305" cy="32" r="28" fill="#ffe27a" opacity=".35"/><circle cx="305" cy="32" r="18" fill="#ffe27a"/><g fill="#fff" opacity=".92"><ellipse cx="58" cy="30" rx="26" ry="9"/><ellipse cx="76" cy="24" rx="18" ry="8"/><ellipse cx="232" cy="46" rx="22" ry="7"/></g><path d="M0 112q60-34 120-6t120-6 120 8v42H0z" fill="#b4e3a6"/><g stroke="#a1286b" stroke-width="2.5"><rect x="140" y="62" width="80" height="58" fill="#f6ecff"/><rect x="116" y="48" width="30" height="72" fill="#e6d4fb"/><rect x="214" y="48" width="30" height="72" fill="#e6d4fb"/><polygon points="110,48 131,14 152,48" fill="#c2347f"/><polygon points="208,48 229,14 250,48" fill="#c2347f"/><polygon points="148,62 180,28 212,62" fill="#f5b942"/><path d="M168 120v-24a12 12 0 0124 0v24z" fill="#c2347f"/></g><path d="M131 14V2l14 5-14 5" fill="#ff3fa8"/><path d="M229 14V2l14 5-14 5" fill="#ff3fa8"/><g fill="#9bd0ff"><rect x="126" y="64" width="10" height="14" rx="5"/><rect x="224" y="64" width="10" height="14" rx="5"/></g><path d="M0 128q90-20 180-4t180-6v32H0z" fill="#7fc873"/><g><circle cx="40" cy="136" r="5" fill="#ff6fa8"/><circle cx="62" cy="140" r="5" fill="#ffd24a"/><circle cx="310" cy="138" r="5" fill="#ff6fa8"/><circle cx="290" cy="142" r="5" fill="#fff"/></g></svg>')}
+function ruler(st,en){let g="";for(let i=0;i<=15;i++)g+=`<path d="M${10+20*i} 42v${i%5?10:16}" stroke="#7a5a00" stroke-width="2"/><text x="${10+20*i}" y="70" font-size="10" text-anchor="middle" fill="#222">${i}</text>`;return `<svg viewBox="0 0 320 78" role="img" aria-label="Pencil above a ruler" style="width:100%;max-width:340px"><rect x="4" y="40" width="312" height="32" rx="4" fill="#ffe9a8" stroke="#7a5a00" stroke-width="2"/>${g}<rect class="pn" x="${10+20*st}" y="14" width="${20*(en-st)}" height="16" rx="4" fill="#e8a317" stroke="#7a3d00" stroke-width="2"/></svg>`}
+function grid(x,y){let g="";for(let i=0;i<=6;i++)g+=`<path d="M${15+20*i} 15V135M15 ${15+20*i}H135" stroke="#bbb" stroke-width="1"/><text x="${15+20*i}" y="148" font-size="9" text-anchor="middle" fill="#222">${i}</text><text x="7" y="${138-20*i}" font-size="9" text-anchor="middle" fill="#222">${i}</text>`;return `<svg viewBox="0 0 150 152" role="img" aria-label="Grid with a dot" style="width:200px;background:#fff;border-radius:10px">${g}<path d="M15 135H135M15 15V135" stroke="#333" stroke-width="2"/><circle class="dt" cx="${15+20*x}" cy="${135-20*y}" r="6" fill="#c2347f"/></svg>`}
+function vx(a,t){if(r(0,99)>=40)return null;const nv=h=>`<span class="nv">${h}</span>`,sh=x=>x.slice().sort(()=>Math.random()-.5);
+ if(a==="num"){const k=r(0,6);
+  if(t<=2&&k<=1){const m=t<2?10:30,s=[];while(s.length<3){const v=r(1,m);if(!s.includes(v))s.push(v)}const big=r(0,1);return{q:`Which number is the ${big?"biggest":"smallest"}?`,a:big?Math.max(...s):Math.min(...s),o:s,h:`Compare the numbers one by one. ${big?"Biggest":"Smallest"} means ${big?"the most":"the fewest"}.`}}
+  if(t===2&&k===2){const rw=r(2,5),cl=r(2,5);return{q:`${nv(Array(rw).fill(Array(cl).fill("🔵").join(" ")).join("<br>"))}<br>${rw} rows of ${cl}. How many altogether?`,a:rw*cl,h:`Count each row, then add the rows: ${Array(rw).fill(cl).join(" + ")}.`}}
+  if(t>=2&&t<=3&&k===3){const h=t===3?r(1,9):0,tn=r(1,9),on=r(0,9);return{q:`What number is ${h?h+" hundreds, ":""}${tn} tens and ${on} ones?`,a:h*100+tn*10+on,h:`Write each place: ${h?h+" hundreds = "+h*100+", ":""}${tn} tens = ${tn*10}, ${on} ones = ${on}. Then add.`}}
+  if(t===2&&k===4){const x=r(3,17);return{q:`${x} + ? = 20`,a:20-x,h:`Count up from ${x} to 20.`}}
+  if(t===3&&k===4){const x=5*r(1,19);return{q:`${x} + ? = 100`,a:100-x,h:"Count up to the next ten, then on to 100."}}
+  if(t===3&&k===5){const n=r(11,98);return{q:`Round ${n} to the nearest 10.`,a:Math.round(n/10)*10,h:"Look at the ones digit. 5 or more rounds up. 4 or less rounds down."}}
+  if(t===4&&k<=2){const n=r(101,998);return{q:`Round ${n} to the nearest 100.`,a:Math.round(n/100)*100,h:"Look at the tens digit. 5 or more rounds up. 4 or less rounds down."}}
+  if(t===4&&k===3){const f=pk([3,4,6,7,8,9]),b=r(2,10);return{q:`${f} × ? = ${f*b}`,a:b,h:`How many ${f}s make ${f*b}? Use ${f} × ? = ${f*b}.`}}
+  if(t>=5&&k<=1){const x=r(2,9),y=r(2,9),z=r(2,9);return{q:`${x} + ${y} × ${z} = ?`,a:x+y*z,h:`Multiply first, then add: ${y} × ${z} = ${y*z}.`}}
+  if(t>=5&&k===2){const n=r(3,12);return{q:`What is ${n} squared?`,a:n*n,h:`Squared means ${n} × ${n}.`}}
+  return null}
+ if(a==="mea"){const k=r(0,7);
+  if(k<=2){const st=t>=3?r(1,4):0,ln=r(2,Math.min(t<2?8:12,15-st));return{q:`${ruler(st,st+ln)}<br>How long is the pencil in cm?`,a:ln,h:t>=3?`The pencil starts at ${st}, not 0. Take away: ${st+ln} − ${st}.`:"Start at 0 and read the number at the end of the pencil."}}
+  if(k===3){const f=pk([["How many days are in a week?",7,1],["How many days are in a weekend?",2,1],["How many months are in a year?",12,1],["How many hours are in a day?",24,2],["How many minutes are in an hour?",60,3],["How many seconds are in a minute?",60,3],["How many days are in February in a normal year?",28,3]].filter(x=>x[2]<=t));return{q:f[0],a:f[1],h:"Think about a calendar or a clock."}}
+  if(k===4&&t>=2&&t<=3){if(r(0,1)){const n=r(2,6);return{q:`How many $2 coins make $${2*n}?`,a:n,h:`Count by 2s: 2, 4, 6… until you reach ${2*n}.`}}const n=r(1,5);return{q:`How many 50c coins make $${n}?`,a:2*n,h:`Two 50c coins make $1. So ${n} dollars need ${n} × 2.`}}
+  if(k===4&&t>=4){const n=r(2,9);return{q:`How many cents are in $${n}?`,a:100*n,h:`$1 is 100 cents. Multiply ${n} × 100.`}}
+  if(k===5&&t>=3){if(t<4||r(0,1)){const kg=r(2,5),n=r(2,6);return{q:`A bag of flour weighs ${kg} kg. How many kg do ${n} bags weigh?`,a:kg*n,h:`${n} groups of ${kg}: ${kg} × ${n}.`}}const c=pk([100,200,250]),n=r(2,6);return{q:`A cup holds ${c} mL. How many mL do ${n} cups hold?`,a:c*n,h:`${n} groups of ${c} mL.`}}
+  if(k===6&&t>=3){const s=pk([8,9,10]),e=r(2,5);return{q:`A class starts at ${s}:00 am and ends at ${e}:00 pm. How many hours is that?`,a:12-s+e,h:`Count from ${s} up to 12, then on to ${e}.`}}
+  return null}
+ if(a==="geo"){const k=r(0,5);
+  if(t<=2&&k<=1){const S3=["🔺","🟦","🔵"],pt=pk([[0,1],[0,0,1],[0,1,1],[0,1,2]]),ord=sh([0,1,2]),sq=[];for(let i=0;i<5;i++)sq.push(S3[ord[pt[i%pt.length]]]);const nx=S3[ord[pt[5%pt.length]]],op=sh(S3);return{q:`${nv(sq.join(" "))}<br>${nv(op.map((s,i)=>`${i+1} ${s}`).join("&emsp;"))}<br>Which number is the shape that comes next?`,a:op.indexOf(nx)+1,o:[1,2,3],h:"Say the pattern out loud. Find what repeats, then what comes next."}}
+  if(t>=2&&k===2){const SO=[["⚽","sphere (ball)"],["🧊","cube"],["🥫","cylinder"],["🍦","cone"]],p3=sh(SO).slice(0,3),ti=r(0,2);return{q:`${nv(p3.map((s,i)=>`${i+1} ${s[0]}`).join("&emsp;"))}<br>Which number is the ${p3[ti][1]}?`,a:ti+1,o:[1,2,3],h:"A sphere is round like a ball. A cube has square faces. A cylinder is like a can. A cone has one point."}}
+  if(t>=3&&k===3){const f=pk([["How many right angles does a rectangle have?",4,3],["How many pairs of parallel sides does a rectangle have?",2,3],["How many equal sides does a square have?",4,3],["How many sides do 2 triangles have altogether?",6,3],["How many corners do 3 squares have altogether?",12,3],["How many faces does a square-based pyramid have?",5,4],["How many corners does a square-based pyramid have?",5,4],["How many degrees are in a half turn?",180,4],["How many degrees are in a full turn?",360,4],["How many right angles are in a half turn?",2,4],["How many degrees are in a right angle?",90,4]].filter(x=>x[2]<=t));return{q:f[0],a:f[1],h:"Picture the shape or draw it quickly, then count."}}
+  if(t>=3&&k===4){const x=r(1,5),y=r(1,5),ac=r(0,1);return{q:`${grid(x,y)}<br>How far ${ac?"across":"up"} is the dot from the corner (0)?`,a:ac?x:y,h:"Go across first, then up. Count the steps."}}
+  return null}
+ if(a==="sta"){const k=r(0,4);
+  if(t>=3&&k<=1){const R=r(2,9),B=r(2,9),G=r(2,9);return r(0,1)?{q:`A bag has ${R} red, ${B} blue and ${G} green marbles. How many marbles are there altogether?`,a:R+B+G,h:`Add all three groups: ${R} + ${B} + ${G}.`}:{q:`A bag has ${R} red, ${B} blue and ${G} green marbles. How many are not red?`,a:B+G,h:"Leave out the red ones. Add blue and green."}}
+  if(t>=3&&k===2){const m=r(2,12),n=[m,m,m];while(n.length<5){const v=r(2,12);if(v!==m&&!n.includes(v))n.push(v)}return{q:`What is the mode (the number that appears most)? ${sh(n).join(", ")}`,a:m,h:"The mode is the number that shows up most times."}}
+  if(t>=2&&k===3){const P3=[["dogs",r(2,9)],["cats",r(2,9)],["fish",r(2,9)]],i=r(0,2),tb=`<table class="pg">${P3.map(p=>`<tr><th scope="row">${p[0]}</th><td>${p[1]}</td></tr>`).join("")}</table><small>Favourite pets in our class</small>`;if(t<3||r(0,1))return{q:`${tb}<br>How many children chose ${P3[i][0]}?`,a:P3[i][1],h:"Find the row, then read the number."};return{q:`${tb}<br>How many children altogether?`,a:P3[0][1]+P3[1][1]+P3[2][1],h:"Add the three numbers."}}
+  if(t>=2&&k===4){const f=pk([["How many sides does a coin have?",2,2],["How many faces does a dice have?",6,2],["A spinner has 4 equal parts. 1 part is red. How many parts are not red?",3,3],["A dice is rolled. How many different numbers could you roll?",6,3],["A coin is tossed. How many different results are possible?",2,3]].filter(x=>x[2]<=t));return{q:f[0],a:f[1],h:"Think about all the things that could happen."}}
+  return null}
+ return null}
+function fv(t){const k=r(0,4);
+ if(k===0){const x=r(1,8);return{q:`What number comes between ${x} and ${x+2}?`,a:x+1,h:`Count: ${x}, ${x+1}, ${x+2}.`}}
+ if(k===1){const n=r(2,5);return{q:`${n} bikes. Each bike has 2 wheels. How many wheels?`,a:2*n,h:Array(n).fill(dots(2,"⚪")).join(" | ")}}
+ if(k===2){const f=pk([["How many fingers are on 2 hands?",10],["How many legs does a cat have?",4],["How many eyes do 3 children have?",6],["How many days are in a week?",7],["How many wheels does a car have?",4],["How many ears do 2 rabbits have?",4]]);return{q:f[0],a:f[1],h:"Picture it in your head and count."}}
+ if(k===3){const x=r(2,9);return{q:`What is double ${x}?`,a:2*x,h:`${dots(x,"🟣")} + ${dots(x,"🟡")}`}}
+ const x=r(1,9),y=r(1,Math.min(9,10-x));return{q:`${x} + ${y} = ?`,a:x+y,h:dots(x,"🍎")+" + "+dots(y,"🍏")}}
+const PR=[["Splendid, Your Majesty!","👑","r01"],["Royal brilliance!","💎","r02"],["Magnificent, Princess!","✨","r03"],["The kingdom cheers for you!","🏰","r04"],["What a sparkling answer!","💎","r05"],["You are as clever as a wizard!","🪄","r06"],["Gems of wisdom!","💎","r07"],["Bravo, brave heart!","💖","r08"],["Fit for a queen!","👸","r09"],["That was enchanting!","🌟","r10"],["Wonderful, your Highness!","👑","r11"],["The castle sparkles for you!","✨","r12"]];
+const PK=[["Daebak!","🔥","k01"],["Super Star!","⭐","k02"],["You are on fire, Hunter!","🎤","k03"],["Jjang! You nailed it!","🎶","k04"],["Hwaiting! Keep going!","💪","k05"],["That was a perfect beat!","🥁","k06"],["Encore, encore!","👏","k07"],["Main stage energy!","🌟","k08"],["Chukhahae! Congratulations!","🎉","k09"],["Neon power up!","⚡","k10"],["The crowd goes wild!","🎤","k11"],["Top of the charts!","📈","k12"]];
+const NR=["Almost there! Your brain is growing 🌱","Good try! Look again 👀","Mistakes help us learn 🌱","Nearly! Take your time ⏳","You can do it! Try once more 💪"],NK=["Not yet, Hunter! Your brain is powering up ⚡","Keep rehearsing, you got this! 🎶","Nice try! Run it back 🔁","Almost on beat! One more go 🥁","Hwaiting! Try again 💪"];
+var LP=-1,AUD={};
+function nudge(){return pk(K()?NK:NR)}
+function praiseL(){const L=K()?PK:PR;let i;do{i=r(0,L.length-1)}while(i===LP&&L.length>1);LP=i;const e=L[i],nm=r(0,3)===0;return[(nm?e[0].replace(/!$/,", "+P[who].n+"!"):e[0])+" "+e[1],nm?null:e[2]]}
+function speakLine(id,t){if(id&&AUD[id]&&!S.mute){try{speechSynthesis.cancel();const au=new Audio(AUD[id]);au.play().catch(()=>say(t));return}catch(e){}}say(t)}
+function greet(n){return pk(K()?[`Hey ${n}! Time to hit the stage!`,`Welcome back, Super Star ${n}!`,`Hi ${n}! Ready to power up?`]:[`Hello Princess ${n}! Where shall we explore?`,`Welcome back, ${n}! The kingdom missed you!`,`Hi ${n}! Ready for an adventure?`])}
+function easier(){const q=ss.qs[ss.i];ss.qs.splice(ss.i+1,0,{...gen(q.area,Math.max(1,tier()-1)),area:q.area});next()}
+function wins(w){const wk=S.log.filter(l=>l.who===w&&!l.pr&&Date.now()-l.t<6048e5),o=[];if(wk.length){const b=wk.slice().sort((p,q)=>q.sc/q.n-p.sc/p.n)[0];o.push(`best session ${b.sc}/${b.n} in ${AREAS[b.area][0]}`)}const sk=(S.stk||{})[w]||[];if(sk.length)o.push(sk.length+" stickers");if((S.best||{})[w])o.push("race best "+S.best[w]);const st=streak(w);if(st>1)o.push(st+"-day streak");return o.length?o.join(" · "):"keep going, the first win is close!"}
+const KO={daebak:["deh bahk","대박"],jjang:["jahng","짱"],hwaiting:["hwy ting","화이팅"],chukhahae:["chook ha heh","축하해"]};
+function pickVoice(){try{const vs=speechSynthesis.getVoices();if(S.voice){const m=vs.find(v=>v.name===S.voice);if(m)return m}const sc=v=>{const n=v.name+" "+v.lang;let s=0;if(/en[-_]NZ/i.test(v.lang))s=40;else if(/en[-_]AU/i.test(v.lang))s=30;else if(/en[-_]GB/i.test(v.lang))s=20;else if(/^en/i.test(v.lang))s=10;else return-1;if(/natural|neural|premium|enhanced|siri|online|wavenet|studio/i.test(n))s+=25;if(/google/i.test(n))s+=8;if(/samantha|karen|moira|tessa|serena|ava|allison|zoe|jenny|aria|libby|sonia|catherine|isla|natasha/i.test(n))s+=6;if(v.localService===false)s+=3;if(/compact|espeak|robot|fred|zarvox|bells|bad news|whisper|trinoids|albert|junior|ralph/i.test(n))s-=40;return s},L=vs.map(v=>[sc(v),v]).filter(x=>x[0]>=0).sort((a,b)=>b[0]-a[0]);return L.length?L[0][1]:null}catch(e){return null}}
+function say(t){if(S.mute)return;try{speechSynthesis.cancel();const vs=speechSynthesis.getVoices(),ko=vs.find(v=>/^ko/i.test(v.lang)),en=pickVoice(),tx=(t||txt(ss.qs[ss.i].q)).replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu,"").replace(/\s+/g," ").trim();
+ tx.split(new RegExp("("+Object.keys(KO).join("|")+")","i")).filter(x=>x.trim()).forEach(p=>{const kw=KO[p.toLowerCase()];if(kw){const u=new SpeechSynthesisUtterance(ko?kw[1]:kw[0]);if(ko){u.voice=ko;u.lang=ko.lang}else{if(en)u.voice=en;u.lang=en?en.lang:"en-NZ"}u.rate=.9;u.pitch=1.1;speechSynthesis.speak(u);return}
+  (p.match(/[^.!?]+[.!?]*/g)||[p]).forEach(s=>{s=s.trim();if(!s||!/[\p{L}\p{N}]/u.test(s))return;const u=new SpeechSynthesisUtterance(s);if(en)u.voice=en;u.lang=en?en.lang:"en-NZ";u.rate=lena()?.88:.96;u.pitch=1.08;speechSynthesis.speak(u)})})}catch(e){}}
+function voicePanel(){let vs=[];try{vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}catch(e){}const cur=pickVoice();return `<p class="c"><b>Voice</b><br><select onchange="S.voice=this.value||null;save()" style="font:inherit;padding:4px;border-radius:8px;max-width:100%"><option value="">Automatic${cur?" ("+esc(cur.name)+")":""}</option>${vs.map(v=>`<option value="${esc(v.name)}"${S.voice===v.name?" selected":""}>${esc(v.name)} · ${v.lang}</option>`).join("")}</select> <button class="pill" onclick="say('Daebak! You are a super star. Let us count together: one, two, three.')">▶ Test voice</button><br><small>For the most natural sound, install an enhanced or natural voice in your device’s text-to-speech settings, then reopen this screen.</small></p>`}
+function goal(){return S.goal||2}
+function skl(a,w){const x=S.log.filter(l=>l.who===w&&l.area===a&&!l.pr).slice(-3);if(!x.length)return["⚪","Not started"];const p=x.reduce((s,l)=>s+l.sc/l.n,0)/x.length;return p>=.8?["🟢","Strong"]:p>=.5?["🟡","Getting there"]:["🔴","Not yet"]}
+function sk(a){const s=skl(a,who);return lena()?s[0]:s[0]+" "+s[1]}
+function nextA(){const fc=(S.focus||{})[who];if(fc&&fc.a&&fc.until>Date.now())return fc.a;const ks=Object.keys(AREAS),u=ks.find(a=>skl(a,who)[1]==="Not started");if(u)return u;const sc=a=>{const x=S.log.filter(l=>l.who===who&&l.area===a&&!l.pr).slice(-3);return x.reduce((s,l)=>s+l.sc/l.n,0)/x.length};return ks.sort((p,q)=>sc(p)-sc(q))[0]}
+function fr(t){if(t<3){let n=2*r(1,10);return{q:`What is half of ${n}?`,a:n/2,h:dots(n,"🟣")+`<br>Share ${n} into 2 equal groups. How many in each group?`}}const f=r(0,1),k=r(1,10),n=f?4*k:2*k;return{q:`What is ${f?"a quarter":"half"} of ${n}?`,a:n/(f?4:2),h:`Share ${n} into ${f?4:2} equal groups. One group is ${f?"a quarter":"half"}.`}}
+function lg(t){const x=r(5,60);let y=r(5,60);while(y===x)y=r(5,60);const big=r(0,1);return{q:`A ribbon is ${x} cm long and a rope is ${y} cm long. Which length is ${big?"longer":"shorter"}?`,a:big?Math.max(x,y):Math.min(x,y),o:[x,y],h:`Compare the tens first, then the ones. ${big?"Longer":"Shorter"} means ${big?"more":"fewer"} centimetres.`}}
+function wardrobe(){const w=(S.wear=S.wear||{leah:[],lena:[]})[who],own=S.items[who];R(`<button class="pill" onclick="home()">⬅ Back</button><h1>My Avatar</h1><div class="card"><div>${av(who)}</div><div style="font-size:44px">${w.map(x=>x.split(" ")[0]).join(" ")||"…"}</div></div><p class="c">Tap to wear or take off (up to 3)</p><div class="row">${own.length?own.map((x,i)=>`<button class="pill" onclick="wear(${i})" style="${w.includes(x)?"outline:3px solid var(--acc2)":""}">${x}</button>`).join(""):"Win items by finishing adventures!"}</div>`)}
+function wear(i){const w=(S.wear=S.wear||{leah:[],lena:[]})[who],x=S.items[who][i],k=w.indexOf(x);if(k>=0)w.splice(k,1);else{if(w.length>=3)w.shift();w.push(x)}save();wardrobe()}
+function quit(b){if(b.dataset.s){clearInterval(RT);try{speechSynthesis.cancel()}catch(e){}$("#pad").hidden=true;ss=null;home()}else{b.dataset.s=1;b.textContent="Tap again to quit";setTimeout(()=>{b.dataset.s="";b.textContent="⬅ Back"},3000)}}
+function upd(){$("#mu").textContent=S.mute?"🔇":"🔊"}
+function streakOld(w=who){let d=new Date(),n=0;for(;;){const k=d.toLocaleDateString("en-NZ");if(S.log.some(l=>l.who===w&&l.d===k&&!l.pr)){n++;d.setDate(d.getDate()-1)}else if(n===0&&k===today())d.setDate(d.getDate()-1);else break}return n}
+function vaultGo(){const qs=S.vault[who].slice(0,5).map(x=>({...x,v:1}));if(!qs.length)return;ss={a:qs[0].area,qs,i:0,sc:0,miss:[],tr:0,pr:true};ask()}
+function artOld(){return K()?`<svg viewBox="0 0 320 120" role="img" aria-label="Neon stage with spotlights" style="width:100%;max-height:130px;margin:6px 0"><rect width="320" height="120" rx="18" fill="#1b0f3d"/><polygon points="60,0 30,100 110,100" fill="#16e0cc" opacity=".25"/><polygon points="160,0 120,100 200,100" fill="#ff3fa8" opacity=".3"/><polygon points="260,0 210,100 290,100" fill="#16e0cc" opacity=".25"/><rect y="96" width="320" height="24" fill="#35206a"/><circle cx="160" cy="62" r="14" fill="#ffd1e8"/><rect x="148" y="76" width="24" height="22" rx="6" fill="#ff3fa8"/><path d="M146 58q14-26 28 0" fill="#120a2a"/><g fill="#ffe14a"><path d="M30 30l4 9 10 1-8 6 3 10-9-6-9 6 3-10-8-6 10-1z"/><path d="M285 22l3 7 8 1-6 5 2 8-7-5-7 5 2-8-6-5 8-1z"/></g></svg>`:`<svg viewBox="0 0 320 120" role="img" aria-label="Royal castle" style="width:100%;max-height:130px;margin:6px 0"><rect width="320" height="120" rx="18" fill="#ffd9ec"/><circle cx="270" cy="26" r="14" fill="#ffe27a"/><rect x="110" y="40" width="100" height="62" fill="#f4e9ff" stroke="#c2347f" stroke-width="3"/><rect x="90" y="30" width="26" height="72" fill="#e6d4fb" stroke="#c2347f" stroke-width="3"/><rect x="204" y="30" width="26" height="72" fill="#e6d4fb" stroke="#c2347f" stroke-width="3"/><polygon points="85,30 103,4 121,30" fill="#c2347f"/><polygon points="199,30 217,4 235,30" fill="#c2347f"/><polygon points="130,40 160,12 190,40" fill="#e8a317"/><path d="M148 102v-24a12 12 0 0124 0v24z" fill="#c2347f"/><rect y="102" width="320" height="18" fill="#9bd48a"/></svg>`}
+upd();
+pick();if(!S.tour)tour(0);
+// ---- GitHub version: optional picture files in the img/ folder (webp or png), used automatically when present
+(function(){const keys=["hero_royal","hero_kpop","bg_royal","bg_kpop"];["num","mea","geo","sta","fnd"].forEach(a=>["royal","kpop"].forEach(t=>keys.push("ic_"+a+"_"+t)));["leah","lena"].forEach(w=>["royal","kpop"].forEach(t=>keys.push("av_"+w+"_"+t)));
+function probe(k,ex){const e=ex[0];if(!e)return;const i=new Image();i.onload=()=>{IMG[k]="img/"+k+"."+e;if(k.indexOf("bg_")===0)bgApply()};i.onerror=()=>probe(k,ex.slice(1));i.src="img/"+k+"."+e}
+keys.forEach(k=>probe(k,["webp","png"]))})();
+// ---- offline support
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script></body></html>
