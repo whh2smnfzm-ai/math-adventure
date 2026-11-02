@@ -83,9 +83,23 @@ body.kpop .card{border-color:var(--acc2);box-shadow:0 0 18px rgba(255,63,168,.25
 .hint{border:2px dashed var(--acc);background:var(--soft)}h1{text-shadow:0 2px 0 var(--soft)}.note{border:2px solid var(--acc2)}
 svg.hero{width:100%;height:auto;border-radius:22px;box-shadow:0 10px 22px rgba(0,0,0,.18)}
 .ca{fill:var(--acc)}.cd{fill:var(--acc2)}.sa{stroke:var(--acc)}.sd{stroke:var(--acc2)}
+#as{position:fixed;left:0;top:0;transform-origin:top left;z-index:100;display:flex;flex-direction:column;color:var(--ink);background:linear-gradient(160deg,var(--bg),var(--soft));overflow:hidden;--u:8px}
+body.kpop #as{background:radial-gradient(circle at 20% 0%,#42209a,#0a0520 70%)}
+#as .ah{display:flex;justify-content:space-between;align-items:center;padding:calc(var(--u)*1.2) calc(var(--u)*2);gap:calc(var(--u)*1)}
+#as .ab{font-size:calc(var(--u)*3);padding:calc(var(--u)*.7) calc(var(--u)*1.6);margin:0 calc(var(--u)*.4);border-radius:calc(var(--u)*2);background:var(--card);border:calc(var(--u)*.3) solid var(--acc);color:var(--ink);cursor:pointer}
+#as .ac{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 calc(var(--u)*4);min-height:0;overflow:auto}
+#as .qt{font-weight:800;line-height:1.25}#as .lb{font-size:calc(var(--u)*2.6);opacity:.85;margin-bottom:calc(var(--u)*.6)}
+#as .ans{margin-top:calc(var(--u)*1.2);font-size:calc(var(--u)*9);font-weight:900;color:var(--onacc);background:var(--acc);padding:calc(var(--u)*.6) calc(var(--u)*4);border-radius:calc(var(--u)*3);animation:pop .4s both}
+#as .how{margin-top:calc(var(--u)*1.2);font-size:calc(var(--u)*3.6);line-height:1.35;background:var(--card);border:calc(var(--u)*.3) dashed var(--acc);border-radius:calc(var(--u)*2.5);padding:calc(var(--u)*1) calc(var(--u)*3);animation:pop .4s both;max-width:94%}
+#as .cd{position:absolute;right:calc(var(--u)*3);bottom:calc(var(--u)*2.5);width:calc(var(--u)*13);height:calc(var(--u)*13);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:calc(var(--u)*7);font-weight:900;background:conic-gradient(var(--acc) calc(var(--p)*1%),var(--soft) 0)}
+#as .cd::before{content:"";position:absolute;inset:calc(var(--u)*1.2);border-radius:50%;background:var(--card)}#as .cd span{position:relative}
+#as svg{height:calc(var(--u)*24)!important;width:auto!important;max-width:90%}
+#as .nv{font-size:calc(var(--u)*5)}#as .pg td{font-size:calc(var(--u)*5)}#as .pg th{font-size:calc(var(--u)*3)}#as small{font-size:calc(var(--u)*2.2)}#as table{width:auto}
+#as .opts{display:flex;gap:calc(var(--u)*2);margin-top:calc(var(--u)*1)}#as .op{font-size:calc(var(--u)*6);font-weight:800;padding:calc(var(--u)*.4) calc(var(--u)*3);border-radius:calc(var(--u)*2);background:var(--card);border:calc(var(--u)*.35) solid var(--acc)}#as .op.ok{background:var(--acc);color:var(--onacc)}
+#as.ph-answer .qt,#as.ph-how .qt{font-size:calc(var(--u)*4.4)!important}#as.ph-answer svg,#as.ph-how svg{height:calc(var(--u)*12)!important}#as.ph-answer .nv,#as.ph-how .nv{font-size:calc(var(--u)*3)}
 </style></head>
 <body class="royal">
-<header><b>NZ Math Adventure <small>v11</small></b><span><button class="ic" onclick="help()" aria-label="Help">❓</button><button class="ic" id="mu" onclick="S.mute=!S.mute;save();upd()" aria-label="Sound on or off">🔊</button><button class="ic" onclick="tog()" aria-label="Switch theme">🎨</button><button class="ic" onclick="who=null;pick()" aria-label="Switch profile">👤</button><button class="ic" onclick="parent()" aria-label="Parent dashboard">👪</button></span></header>
+<header><b>NZ Math Adventure <small>v12</small></b><span><button class="ic" onclick="help()" aria-label="Help">❓</button><button class="ic" id="mu" onclick="S.mute=!S.mute;save();upd()" aria-label="Sound on or off">🔊</button><button class="ic" onclick="tog()" aria-label="Switch theme">🎨</button><button class="ic" onclick="who=null;pick()" aria-label="Switch profile">👤</button><button class="ic" onclick="parent()" aria-label="Parent dashboard">👪</button></span></header>
 <main id="app"></main>
 <div id="pad" hidden><canvas id="cv" width="240" height="170"></canvas><button onclick="clr()">🧹 Clear</button><button onclick="pad()">✖ Close</button></div>
 <script>
@@ -178,7 +192,7 @@ function sel(w){who=w;document.body.className=S.theme+(lena()?" lena":"");home()
 function home(){const n=P[who].n,lim=done()>=goal(),have=S.items[who];
  R(`${art()}<h1>${K()?"Stage Map":"Royal Map"}</h1><p class="c">${lena()?"":`Hi ${n}! `}Pick a place to explore.</p>
  <div class="g2">${Object.keys(AREAS).map(a=>`<button class="tile" onclick="go('${a}')"><span class="em">${icon(a)}</span>${PL[S.theme][a]}${lena()?"":`<small>${AREAS[a][0]}</small>`}<small>${sk(a)}</small></button>`).join("")}</div>
- <p class="c">${lim?"":`<button class="pill" onclick="race()">⚡ Number Race</button>`}<button class="pill" onclick="book()">🏅 Stickers</button><button class="pill" onclick="pcard()">🪧 My Card</button>${lena()?`<button class="pill" onclick="go('fnd')">🔵 Foundations ${sk('fnd')}</button>`:""}${chkOk()?`<button class="pill" onclick="startCheck()">⭐ Star Challenge</button>`:""}</p>
+ <p class="c">${lim?"":`<button class="pill" onclick="race()">⚡ Number Race</button>`}<button class="pill" onclick="autoSetup()">📺 Auto Play</button><button class="pill" onclick="book()">🏅 Stickers</button><button class="pill" onclick="pcard()">🪧 My Card</button>${lena()?`<button class="pill" onclick="go('fnd')">🔵 Foundations ${sk('fnd')}</button>`:""}${chkOk()?`<button class="pill" onclick="startCheck()">⭐ Star Challenge</button>`:""}</p>
  <p class="c">${focusOn()?"📌 School focus":"💡 Try next"}: <button class="pill" onclick="go('${nextA()}')">${AREAS[nextA()][1]} ${PL[S.theme][nextA()]}</button></p>
  ${lim?`<p class="note">🌙 Today’s ${goal()} adventure${goal()>1?"s are":" is"} done! Review mode is open: 5 practice questions, no limits on learning.</p>`:`<p class="c">Adventures today: ${done()} of ${goal()}</p>`}
  <p class="c"><button class="pill" onclick="wardrobe()">${who==="leah"?"🧒":"👧"} ${((S.wear||{})[who]||[]).map(x=>x.split(" ")[0]).join("")} My Avatar</button></p>
@@ -452,6 +466,54 @@ function say(t){if(S.mute)return;try{speechSynthesis.cancel();const vs=speechSyn
  tx.split(new RegExp("("+Object.keys(KO).join("|")+")","i")).filter(x=>x.trim()).forEach(p=>{const kw=KO[p.toLowerCase()];if(kw){const u=new SpeechSynthesisUtterance(ko?kw[1]:kw[0]);if(ko){u.voice=ko;u.lang=ko.lang}else{if(en)u.voice=en;u.lang=en?en.lang:"en-NZ"}u.rate=.9;u.pitch=1.1;speechSynthesis.speak(u);return}
   (p.match(/[^.!?]+[.!?]*/g)||[p]).forEach(s=>{s=s.trim();if(!s||!/[\p{L}\p{N}]/u.test(s))return;const u=new SpeechSynthesisUtterance(s);if(en)u.voice=en;u.lang=en?en.lang:"en-NZ";u.rate=lena()?.88:.96;u.pitch=1.08;speechSynthesis.speak(u)})})}catch(e){}}
 function voicePanel(){let vs=[];try{vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}catch(e){}const cur=pickVoice();return `<p class="c"><b>Voice</b><br><select onchange="S.voice=this.value||null;save()" style="font:inherit;padding:4px;border-radius:8px;max-width:100%"><option value="">Automatic${cur?" ("+esc(cur.name)+")":""}</option>${vs.map(v=>`<option value="${esc(v.name)}"${S.voice===v.name?" selected":""}>${esc(v.name)} · ${v.lang}</option>`).join("")}</select> <button class="pill" onclick="say('Daebak! You are a super star. Let us count together: one, two, three.')">▶ Test voice</button><br><small>For the most natural sound, install an enhanced or natural voice in your device’s text-to-speech settings, then reopen this screen.</small></p>`}
+var AU=null;
+const ANM={mixed:["⭐","Mixed"],num:["🔢","Number"],mea:["📏","Measurement"],geo:["🔷","Geometry"],sta:["📊","Statistics"],fnd:["🔵","Foundations"]};
+function autoKeys(){return["mixed"].concat(Object.keys(AREAS)).concat(who==="lena"?["fnd"]:[])}
+function autoSel(){const s=(S.auto||{}).sel||["mixed"];return s.length?s:["mixed"]}
+function autoAreas(){const s=autoSel(),a=s.includes("mixed")?autoKeys().slice(1):s.filter(k=>k!=="fnd"||who==="lena");return a.length?a:autoKeys().slice(1)}
+function autoSet(k,v){S.auto=S.auto||{};S.auto[k]=v;save()}
+function autoPick(k){S.auto=S.auto||{};let s=autoSel().slice();if(k==="mixed")s=["mixed"];else{s=s.filter(x=>x!=="mixed");const i=s.indexOf(k);if(i>=0)s.splice(i,1);else s.push(k);if(!s.length)s=["mixed"]}S.auto.sel=s;save();if(AU&&AU.phase==="sections")autoDraw();else autoSetup()}
+function autoChips(cls,st){const s=autoSel();return autoKeys().map(k=>`<button class="${cls}" style="${st||""}${s.includes(k)?"background:var(--acc);color:var(--onacc)":""}" onclick="autoPick('${k}')">${ANM[k][0]} ${ANM[k][1]}</button>`).join("")}
+function autoSetup(){const au=S.auto||{},t=au.t||10,m=au.max===undefined?20:au.max,sty="font:inherit;padding:4px;border-radius:8px";R(`<button class="pill" onclick="home()">⬅ Back</button><h1>📺 Auto Play</h1><p class="c">Questions play by themselves like a video, with the answer and how it works. Choose what to watch:</p><div class="row">${autoChips("pill","font-size:20px;")}</div><p class="c">Time to think: <select onchange="autoSet('t',+this.value)" style="${sty}">${[5,10,15,20].map(x=>`<option value="${x}"${x===t?" selected":""}>${x} seconds</option>`).join("")}</select><br>Stop after: <select onchange="autoSet('max',+this.value)" style="${sty}">${[[10,"10 minutes"],[20,"20 minutes"],[30,"30 minutes"],[0,"No limit"]].map(o=>`<option value="${o[0]}"${o[0]===m?" selected":""}>${o[1]}</option>`).join("")}</select></p><div class="row"><button class="btn" onclick="autoStart()">▶ Start</button></div><p class="note">It goes full screen and sideways. Tap ⏹ Stop any time.</p>`)}
+function autoStart(){const au=S.auto||{},el=document.createElement("div");el.id="as";document.body.appendChild(el);AU={el,t:au.t||10,max:au.max===undefined?20:au.max,t0:Date.now(),n:0,by:{},paused:false,last:"",fs:0};
+ try{const rf=el.requestFullscreen||el.webkitRequestFullscreen;if(rf){const p=rf.call(el);if(p&&p.catch)p.catch(()=>{})}}catch(e){}
+ try{screen.orientation.lock("landscape").catch(()=>{})}catch(e){}
+ try{navigator.wakeLock.request("screen").then(l=>{if(AU)AU.wl=l;else l.release()}).catch(()=>{})}catch(e){}
+ try{addEventListener("resize",autoFit);addEventListener("orientationchange",autoFit);document.addEventListener("fullscreenchange",autoFs);document.addEventListener("webkitfullscreenchange",autoFs);document.addEventListener("keydown",autoKey)}catch(e){}
+ autoNext()}
+function autoFit(){if(!AU||!AU.el)return;const w=innerWidth,h=innerHeight,por=h>w,W=por?h:w,H=por?w:h,el=AU.el;el.style.width=W+"px";el.style.height=H+"px";el.style.transform=por?"rotate(90deg) translateY(-100%)":"none";el.style.setProperty("--u",Math.min(W/100,H/56)+"px")}
+function autoFs(){if(!AU)return;if(document.fullscreenElement===AU.el||document.webkitFullscreenElement===AU.el)AU.fs=1;else if(AU.fs)autoStop()}
+function autoKey(e){if(!AU)return;if(e.key===" "){e.preventDefault();autoPause()}else if(e.key==="ArrowRight")autoSkip();else if(e.key==="Escape")autoStop()}
+function autoClear(){if(!AU)return;clearTimeout(AU.tm);clearInterval(AU.iv)}
+function autoNext(){if(!AU)return;autoClear();AU.paused=false;AU.resume=null;if(AU.max&&Date.now()-AU.t0>AU.max*60000){autoStop("time");return}
+ const as=autoAreas();let q,k=0;do{const a=pk(as);q={...gen(a,tier()),area:a};k++}while((q.set||q.q===AU.last)&&k<30);
+ AU.last=q.q;AU.cur=q;AU.n++;AU.by[q.area]=(AU.by[q.area]||0)+1;AU.phase="think";AU.left=AU.t;autoDraw();say(txt(q.q));AU.iv=setInterval(autoTick,1000)}
+function autoTick(){if(!AU||AU.paused||AU.phase!=="think")return;AU.left--;const c=$("#cn");if(c)c.textContent=AU.left;const cd=$("#cd");if(cd)cd.style.setProperty("--p",AU.left/AU.t*100);if(AU.left>0&&AU.left<=3)snd(520,.08);if(AU.left<=0)autoReveal()}
+function autoReveal(){autoClear();AU.phase="answer";autoDraw();snd(660);setTimeout(()=>snd(880),120);say("The answer is "+AU.cur.a);AU.tm=setTimeout(autoHow,3500)}
+function autoHow(){if(!AU)return;autoClear();AU.phase="how";autoDraw();const e=explain(AU.cur);say(txt(e).replace(/→/g," so ").replace(/÷/g," divided by "));AU.tm=setTimeout(autoNext,Math.max(9000,Math.min(18000,txt(e).length*110)))}
+function autoSkip(){autoNext()}
+function autoPause(){if(!AU)return;AU.paused=!AU.paused;if(AU.paused){clearTimeout(AU.tm);AU.resume=AU.phase==="answer"?autoHow:AU.phase==="how"?()=>{AU.tm=setTimeout(autoNext,5000)}:null;try{speechSynthesis.cancel()}catch(e){}}else if(AU.resume){const f=AU.resume;AU.resume=null;f()}autoDraw()}
+function autoSections(){if(!AU)return;autoClear();AU.paused=true;AU.phase="sections";try{speechSynthesis.cancel()}catch(e){}autoDraw()}
+function autoMute(){S.mute=!S.mute;save();if(S.mute){try{speechSynthesis.cancel()}catch(e){}}autoDraw()}
+function autoDraw(){if(!AU||!AU.cur)return;const q=AU.cur,ph=AU.phase,el=AU.el,A=ANM[q.area]||["",""],len=txt(q.q).length,fs=len<=40?6.5:len<=80?5.4:4.4,s=autoSel(),sl=s.includes("mixed")?"Mixed":s.length>1?s.length+" sections":ANM[s[0]][1];let body;
+ if(ph==="sections")body=`<div class="lb">Choose what to watch</div><div class="row" style="gap:calc(var(--u)*1)">${autoChips("ab")}</div><div class="row"><button class="ab" onclick="autoNext()">▶ Continue</button></div>`;
+ else{const op=q.o?`<div class="opts">${q.o.map(o=>`<span class="op${ph!=="think"&&o===q.a?" ok":""}">${o}</span>`).join("")}</div>`:"";body=`<div class="lb">${A[0]} ${A[1]} · Question ${AU.n}</div><div class="qt" style="font-size:calc(var(--u)*${fs})">${q.q}</div>${op}${ph!=="think"?`<div class="ans">✔ ${q.a}</div>`:""}${ph==="how"?`<div class="how">${explain(q)}</div>`:""}`}
+ el.className="ph-"+ph;el.innerHTML=`<div class="ah"><span><button class="ab" onclick="autoStop()">⏹ Stop</button><button class="ab" onclick="autoPause()">${AU.paused&&ph!=="sections"?"▶ Resume":"⏸ Pause"}</button><button class="ab" onclick="autoSkip()">⏭ Next</button></span><span><button class="ab" onclick="autoSections()">☰ ${sl}</button><button class="ab" onclick="autoMute()">${S.mute?"🔇":"🔊"}</button></span></div><div class="ac">${body}</div>${ph==="think"?`<div class="cd" id="cd" style="--p:${AU.left/AU.t*100}"><span id="cn">${AU.left}</span></div>`:""}`;autoFit()}
+function autoStop(why){if(!AU)return;const A=AU;AU=null;clearTimeout(A.tm);clearInterval(A.iv);
+ try{removeEventListener("resize",autoFit);removeEventListener("orientationchange",autoFit);document.removeEventListener("fullscreenchange",autoFs);document.removeEventListener("webkitfullscreenchange",autoFs);document.removeEventListener("keydown",autoKey)}catch(e){}
+ try{A.el.remove()}catch(e){}try{if(document.fullscreenElement)document.exitFullscreen()}catch(e){}try{screen.orientation.unlock()}catch(e){}try{if(A.wl)A.wl.release()}catch(e){}try{speechSynthesis.cancel()}catch(e){}
+ R(`<h1>📺 Auto Play finished</h1><div class="card">${A.n} question${A.n===1?"":"s"}<br><span style="font-size:18px;font-weight:400">${why==="time"?"Time’s up for watching. ":""}${Object.keys(A.by).map(a=>ANM[a][0]+" "+A.by[a]).join(" · ")}</span></div><div class="row"><button class="btn" onclick="autoSetup()">▶ Watch again</button><button class="pill" onclick="home()">Back to map</button></div>`)}
+function autoParts(n){const o=[];if(n>=100)o.push(Math.floor(n/100)*100);const t=Math.floor(n%100/10)*10;if(t)o.push(t);if(n%10||!o.length)o.push(n%10);return o}
+function explain(q){const s=q.q;let m;
+ if(m=s.match(/^(\d+) ([+−]) (\d+) = \?$/)){const x=+m[1],y=+m[3],pl=m[2]==="+",ps=autoParts(y);if(ps.length===1)return pl?`${x} + ${y}: count on ${y} from ${x}<br>${x} + ${y} = ${x+y}`:`${x} − ${y}: count back ${y} from ${x}<br>${x} − ${y} = ${x-y}`;let cur=x;const L=[`Split ${y} into ${ps.join(" + ")}`];ps.forEach(p=>{const nx=pl?cur+p:cur-p;L.push(`${cur} ${m[2]} ${p} = ${nx}`);cur=nx});return L.join("<br>")+`<br>So ${x} ${m[2]} ${y} = ${cur}`}
+ if(m=s.match(/^(\d+) × (\d+) = \?$/)){const x=+m[1],y=+m[2];if(x<=10&&y<=12)return `${y} groups of ${x}<br>${Array(y).fill(x).join(" + ")} = ${x*y}`;const ps=autoParts(x);return `Split ${x} into ${ps.join(" + ")}<br>${ps.map(p=>`${p} × ${y} = ${p*y}`).join("<br>")}<br>Add them: ${ps.map(p=>p*y).join(" + ")} = ${x*y}`}
+ if(m=s.match(/^(\d+) ÷ (\d+) = \?$/)){const x=+m[1],y=+m[2],c=x/y;return `How many ${y}s fit in ${x}?<br>Count by ${y}s: ${Array.from({length:Math.min(c,12)},(_,i)=>y*(i+1)).join(", ")}<br>${c} × ${y} = ${x}, so ${x} ÷ ${y} = ${c}`}
+ if(m=s.match(/^(\d+) \+ \? = (\d+)$/))return `Count up from ${m[1]} to ${m[2]}<br>${m[2]} − ${m[1]} = ${q.a}`;
+ if(m=s.match(/^\? \+ (\d+) = (\d+)$/))return `Think: ${m[2]} − ${m[1]} = ${q.a}<br>Check: ${q.a} + ${m[1]} = ${m[2]}`;
+ if(m=s.match(/^(\d+) × \? = (\d+)$/))return `Share ${m[2]} into groups of ${m[1]}<br>${m[2]} ÷ ${m[1]} = ${q.a}<br>Check: ${m[1]} × ${q.a} = ${m[2]}`;
+ if(m=s.match(/^What is (\d+) squared\?$/))return `Squared means ${m[1]} × ${m[1]}<br>${m[1]} × ${m[1]} = ${q.a}`;
+ if(m=s.match(/^(\d+) \+ (\d+) × (\d+) = \?$/))return `Multiply first: ${m[2]} × ${m[3]} = ${m[2]*m[3]}<br>Then add: ${m[1]} + ${m[2]*m[3]} = ${q.a}`;
+ return q.h+`<br><b>Answer: ${q.a}</b>`}
 function goal(){return S.goal||2}
 function skl(a,w){const x=S.log.filter(l=>l.who===w&&l.area===a&&!l.pr).slice(-3);if(!x.length)return["⚪","Not started"];const p=x.reduce((s,l)=>s+l.sc/l.n,0)/x.length;return p>=.8?["🟢","Strong"]:p>=.5?["🟡","Getting there"]:["🔴","Not yet"]}
 function sk(a){const s=skl(a,who);return lena()?s[0]:s[0]+" "+s[1]}
@@ -474,3 +536,4 @@ keys.forEach(k=>probe(k,["webp","png"]))})();
 // ---- offline support
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script></body></html>
+
